@@ -12,7 +12,8 @@ public class UserEntity {
     private String username;
     private String tel;
     private String email;
-    private BigDecimal balance;
+    private int sex;
+    private double balance;
 
     @Id
     @Column(name = "id")
@@ -22,6 +23,16 @@ public class UserEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "sex")
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 
     @Basic
@@ -76,11 +87,11 @@ public class UserEntity {
 
     @Basic
     @Column(name = "balance")
-    public BigDecimal getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
@@ -97,7 +108,8 @@ public class UserEntity {
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (tel != null ? !tel.equals(that.tel) : that.tel != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (balance != null ? !balance.equals(that.balance) : that.balance != null) return false;
+        if (balance != that.balance) return false;
+
 
         return true;
     }
@@ -110,7 +122,6 @@ public class UserEntity {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (tel != null ? tel.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (balance != null ? balance.hashCode() : 0);
         return result;
     }
 }

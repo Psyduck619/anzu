@@ -1,13 +1,14 @@
 ### 用户信息表
 
-![image-20210531221627631](description.assets/image-20210531221627631.png)
+![image-20210601211648101](description.assets/image-20210601211648101.png)
 
 ```sql
 CREATE TABLE user(
     id INT NOT NULL AUTO_INCREMENT  COMMENT 'id 用户id号' ,
-    account VARCHAR(32)    COMMENT 'account 用户账号' ,
+    account VARCHAR(32) NOT NULL   COMMENT 'account 用户账号' ,
     password VARCHAR(32) NOT NULL   COMMENT 'password 用户密码' ,
     username VARCHAR(32) NOT NULL   COMMENT 'username 用户昵称' ,
+    sex INT NOT NULL   COMMENT 'sex 性别 0男性 1女性' ,
     tel VARCHAR(32)    COMMENT 'tel 用户手机号码' ,
     email VARCHAR(32)    COMMENT 'email 用户邮箱' ,
     balance DECIMAL(32,10) NOT NULL  DEFAULT 0.0 COMMENT 'balance 用户余额' ,
@@ -104,24 +105,9 @@ CREATE TABLE goods_statistics(
 
 
 
-### 管理员表
-
-![image-20210531222351005](description.assets/image-20210531222351005.png)
-
-```sql
-CREATE TABLE admin(
-    id INT NOT NULL   COMMENT 'id id' ,
-    account VARCHAR(32) NOT NULL   COMMENT 'account 账户名' ,
-    password VARCHAR(32) NOT NULL   COMMENT 'password 管理员密码' ,
-    PRIMARY KEY (id)
-) COMMENT = 'admin 管理员表';
-```
-
-
-
 ### 商家表
 
-![image-20210531222443203](description.assets/image-20210531222443203.png)
+![image-20210601212126772](description.assets/image-20210601212126772.png)
 
 ```sql
 CREATE TABLE merchant(
@@ -131,6 +117,7 @@ CREATE TABLE merchant(
     merchant_name VARCHAR(32) NOT NULL   COMMENT 'merchant_name 商家名称' ,
     balance VARCHAR(32) NOT NULL   COMMENT 'balance 商家账户余额' ,
     tel VARCHAR(32) NOT NULL   COMMENT 'tel 商家手机号码' ,
+    admin_flag VARCHAR(32) NOT NULL  DEFAULT 0 COMMENT 'admin_flag 管理员标记 0代表非管理员 1代表管理员' ,
     PRIMARY KEY (id)
 ) COMMENT = 'merchant 商家表';
 ```
@@ -190,3 +177,43 @@ CREATE TABLE comment_statistic(
 
 
 ### 售后情况表
+
+![image-20210531223205530](description.assets/image-20210531223205530.png)
+
+```sql
+CREATE TABLE aftersales(
+    id INT NOT NULL AUTO_INCREMENT  COMMENT 'id 售后申请id' ,
+    order_id INT NOT NULL   COMMENT 'order_id 对应订单编号' ,
+    refund_type INT NOT NULL   COMMENT 'refund_type 退款类型 0仅退款 1退货退款 2换货' ,
+    goods_status INT NOT NULL   COMMENT 'goods_status 货物状态 0:已收到货 1:未收到货' ,
+    reason VARCHAR(32) NOT NULL   COMMENT 'reason 退换货理由' ,
+    processing_status VARCHAR(32) NOT NULL   COMMENT 'processing_status 订单处理状态 -1拒绝 0未处理 1已同意' ,
+    feedback VARCHAR(32)    COMMENT 'feedback 处理反馈' ,
+    PRIMARY KEY (id)
+) COMMENT = 'aftersales 售后情况表';
+```
+
+
+
+### 订单表
+
+![image-20210531223314952](description.assets/image-20210531223314952.png)
+
+```sql
+CREATE TABLE goods_order(
+    id INT NOT NULL AUTO_INCREMENT  COMMENT 'id 订单编号' ,
+    user_id INT NOT NULL   COMMENT 'user_id 相关用户id' ,
+    goods_id INT NOT NULL   COMMENT 'goods_id 商品id' ,
+    merchant_id INT NOT NULL   COMMENT 'merchant_id 商家id' ,
+    user_address_id INT NOT NULL   COMMENT 'user_address_id 用户地址id' ,
+    merchant_address_id INT NOT NULL   COMMENT 'merchant_address_id 商家地址id' ,
+    order_status INT NOT NULL   COMMENT 'order_status 订单状态 1已付款,2已发货,,3已签收,4已完成,5使用中,6,超时,-1退货申请,-2退货中,-3已退货,-4取消交易 -5商品返还中' ,
+    goods_num INT NOT NULL   COMMENT 'goods_num 商品数量' ,
+    goods_total_price DECIMAL(32,10) NOT NULL   COMMENT 'goods_total_price 商品总价' ,
+    receiving_time DATE NOT NULL   COMMENT 'receiving_time 收货时间' ,
+    lease_time BIGINT NOT NULL   COMMENT 'lease_time 租赁时间' ,
+    deposit DECIMAL(32,10) NOT NULL   COMMENT 'deposit 剩余应返押金' ,
+    PRIMARY KEY (id)
+) COMMENT = 'goods_order 订单表';
+```
+

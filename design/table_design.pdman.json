@@ -20,7 +20,8 @@
               "name": "account",
               "type": "DefaultString",
               "remark": "用户账号",
-              "chnname": "account"
+              "chnname": "account",
+              "notNull": true
             },
             {
               "name": "password",
@@ -34,6 +35,13 @@
               "type": "DefaultString",
               "remark": "用户昵称",
               "chnname": "username",
+              "notNull": true
+            },
+            {
+              "name": "sex",
+              "type": "Integer",
+              "remark": "性别 0男性 1女性",
+              "chnname": "sex",
               "notNull": true
             },
             {
@@ -678,6 +686,14 @@
               "remark": "商家手机号码",
               "chnname": "tel",
               "notNull": true
+            },
+            {
+              "name": "admin_flag",
+              "type": "DefaultString",
+              "remark": "管理员标记 0代表非管理员 1代表管理员",
+              "chnname": "admin_flag",
+              "notNull": true,
+              "defaultValue": "0"
             }
           ],
           "indexs": [],
