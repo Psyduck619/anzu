@@ -5,57 +5,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.CartEntity;
+import zucc.dorm316.anzu.entity.CategoryEntity;
 import zucc.dorm316.anzu.service.TblCartService;
+import zucc.dorm316.anzu.service.TblCategoryService;
 
 import java.util.List;
 
 @Transactional
 @RestController
 @CrossOrigin
-@RequestMapping(value="/cart")
-public class TblCartController {
+@RequestMapping(value="/category")
+public class TblCategoryController {
     @Autowired
-    TblCartService tblCartService;
+    TblCategoryService tblCategoryService;
 
     @RequestMapping(value="/findById",method= RequestMethod.GET)
     public JSONObject findById(@RequestParam(value = "id") int id){
-        CartEntity cartEntity = tblCartService.findById(id);
+        CategoryEntity categoryEntity = tblCategoryService.findById(id);
         JSONObject result=new JSONObject();
-        if (cartEntity == null)
+        if (categoryEntity == null)
         {
             result.put("port","500");
-            result.put("msg","无此购物车记录");
+            result.put("msg","无此类别");
             return result;
         }
         else{
             result.put("port","200");
-            result.put("data",cartEntity);
+            result.put("data",categoryEntity);
             return result;
         }
     }
 
-    @RequestMapping(value="/findAllByUserId",method= RequestMethod.GET)
-    public JSONObject findByUserId(@RequestParam(value = "user_id") int user_id){
-        List<CartEntity> cartEntityList = tblCartService.findByUserId(user_id);
+    @RequestMapping(value="/findAll",method= RequestMethod.GET)
+    public JSONObject findAll(){
+        List<CategoryEntity> categoryEntityList = tblCategoryService.findAll();
         JSONObject result=new JSONObject();
-        if (cartEntityList.size()==0)
+        if (categoryEntityList.size()==0)
         {
             result.put("port","500");
-            result.put("msg","该用户尚未在购物车中添加商品");
+            result.put("msg","尚无类别记录");
             return result;
         }
         else{
             result.put("port","200");
-            result.put("data",cartEntityList);
+            result.put("data",categoryEntityList);
             return result;
         }
     }
+
     @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
-    public JSONObject deleteCartByid(@RequestParam(value = "id") int id)
+    public JSONObject deleteCategoryById(@RequestParam(value = "id") int id)
     {
         JSONObject result=new JSONObject();
         try {
-            tblCartService.deleteCardGoodsById(id);
+            tblCategoryService.deleteById(id);
             result.put("port","200");
         }
         catch (Exception e){
@@ -66,13 +69,11 @@ public class TblCartController {
     }
 
     @RequestMapping(value="/add",method= RequestMethod.POST)
-    public JSONObject addUserAddress(@RequestParam(value = "user_id")int user_id,
-                                     @RequestParam(value = "goods_id")int goods_id,
-                                     @RequestParam(value = "goods_num")int goods_num)
+    public JSONObject addCategory(@RequestParam(value = "name")String name)
     {
         JSONObject result=new JSONObject();
         try {
-            tblCartService.addCartGoods(user_id, goods_id, goods_num);
+            tblCategoryService.addCategory(name);
             result.put("port","200");
         }
         catch (Exception e){
@@ -83,18 +84,12 @@ public class TblCartController {
     }
 
     @RequestMapping(value="/modify",method= RequestMethod.POST)
-    public JSONObject modifyUserAddress(@RequestParam(value = "user_id")int user_id,
-                                        @RequestParam(value = "goods_num")int goods_num,
+    public JSONObject modifyCategory(@RequestParam(value = "name")String name,
                                         @RequestParam(value = "id")int id )
     {
         JSONObject result=new JSONObject();
         try {
-            CartEntity cartEntity = tblCartService.findById(id);
-            if(goods_num + cartEntity.getGoodsNum()<=0){
-                result.put("port","400");
-                result.put("msg","商品数量不得小于等于0");
-            }
-            tblCartService.modifyGoodsNum(user_id,cartEntity.getGoodsId(),goods_num,id);
+            tblCategoryService.modifyCategory(name,id);
             result.put("port","200");
         }
         catch (Exception e){

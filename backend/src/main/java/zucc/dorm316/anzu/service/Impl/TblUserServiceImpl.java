@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zucc.dorm316.anzu.dao.TblUserDAO;
-import zucc.dorm316.anzu.entity.UserEntity;
 import zucc.dorm316.anzu.service.TblUserService;
+import zucc.dorm316.anzu.entity.UserEntity;
 
 @Service
 @Transactional
@@ -31,12 +31,12 @@ public class TblUserServiceImpl implements TblUserService {
     }
 
     @Override
-    public void addUser(String account, String password, String userName, int sex,String tel, String email, double balance) {
-        tblUserDAO.addUser(account,password,userName,sex,tel,email,balance);
+    public void addUser(String account, String password, String userName, double balance) {
+        tblUserDAO.addUser(account,password,userName,balance);
     }
 
     @Override
-    public void modifyUser(int id, String account, String password, String userName, int sex,String tel, String email, double balance) {
-        tblUserDAO.modifyUser(account,password,userName,sex,tel,email,balance,id);
+    public void modifyUser(int id, String account, String password, String userName,  double balance) {
+        tblUserDAO.modifyUser(account,password,userName,balance,id);
     }
 }

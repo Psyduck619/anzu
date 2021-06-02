@@ -19,7 +19,7 @@
             {
               "name": "account",
               "type": "DefaultString",
-              "remark": "用户账号",
+              "remark": "用户账号-->手机号注册",
               "chnname": "account",
               "notNull": true
             },
@@ -36,27 +36,6 @@
               "remark": "用户昵称",
               "chnname": "username",
               "notNull": true
-            },
-            {
-              "name": "sex",
-              "type": "Integer",
-              "remark": "性别 0男性 1女性",
-              "chnname": "sex",
-              "notNull": true
-            },
-            {
-              "name": "tel",
-              "type": "DefaultString",
-              "remark": "用户手机号码",
-              "chnname": "tel",
-              "pk": false,
-              "notNull": false
-            },
-            {
-              "name": "email",
-              "type": "DefaultString",
-              "remark": "用户邮箱",
-              "chnname": "email"
             },
             {
               "name": "balance",
@@ -151,9 +130,16 @@
               "notNull": true
             },
             {
+              "name": "area",
+              "type": "DefaultString",
+              "remark": "区",
+              "chnname": "area",
+              "notNull": true
+            },
+            {
               "name": "detail",
               "type": "DefaultString",
-              "remark": "具体区域",
+              "remark": "具体地址",
               "chnname": "detail",
               "notNull": true
             },
@@ -346,17 +332,17 @@
               "chnname": "intro"
             },
             {
-              "name": "check_status",
+              "name": "putaway_status",
               "type": "Integer",
-              "remark": "审核状态 -1 审核失败 0 未审核 1 审核成功",
-              "chnname": "check_status",
+              "remark": "上架状态 -1=>下架,0=>审核中，1=>上架",
+              "chnname": "status",
               "notNull": true
             },
             {
-              "name": "putaway_status",
-              "type": "Integer",
-              "remark": "上架状态 -1=>下架,1=>上架",
-              "chnname": "putaway_status",
+              "name": "pic_url",
+              "type": "DefaultString",
+              "remark": "图片地址",
+              "chnname": "pic_url",
               "notNull": true
             },
             {
@@ -681,13 +667,6 @@
               "notNull": true
             },
             {
-              "name": "tel",
-              "type": "DefaultString",
-              "remark": "商家手机号码",
-              "chnname": "tel",
-              "notNull": true
-            },
-            {
               "name": "admin_flag",
               "type": "DefaultString",
               "remark": "管理员标记 0代表非管理员 1代表管理员",
@@ -777,6 +756,13 @@
               "type": "DefaultString",
               "remark": "城市",
               "chnname": "city",
+              "notNull": true
+            },
+            {
+              "name": "area",
+              "type": "DefaultString",
+              "remark": "区域",
+              "chnname": "area",
               "notNull": true
             },
             {

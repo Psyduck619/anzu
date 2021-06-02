@@ -6,9 +6,10 @@ import javax.persistence.*;
 @Table(name = "merchant_address", schema = "anzu", catalog = "")
 public class MerchantAddressEntity {
     private int id;
-    private int userId;
+    private int merchantId;
     private String prov;
     private String city;
+    private String area;
     private String detail;
     private String name;
     private String tel;
@@ -24,13 +25,13 @@ public class MerchantAddressEntity {
     }
 
     @Basic
-    @Column(name = "user_id")
-    public int getUserId() {
-        return userId;
+    @Column(name = "merchant_id")
+    public int getMerchantId() {
+        return merchantId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setMerchantId(int merchantId) {
+        this.merchantId = merchantId;
     }
 
     @Basic
@@ -51,6 +52,16 @@ public class MerchantAddressEntity {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Basic
+    @Column(name = "area")
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     @Basic
@@ -91,9 +102,10 @@ public class MerchantAddressEntity {
         MerchantAddressEntity that = (MerchantAddressEntity) o;
 
         if (id != that.id) return false;
-        if (userId != that.userId) return false;
+        if (merchantId != that.merchantId) return false;
         if (prov != null ? !prov.equals(that.prov) : that.prov != null) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
+        if (area != null ? !area.equals(that.area) : that.area != null) return false;
         if (detail != null ? !detail.equals(that.detail) : that.detail != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (tel != null ? !tel.equals(that.tel) : that.tel != null) return false;
@@ -104,9 +116,10 @@ public class MerchantAddressEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + userId;
+        result = 31 * result + merchantId;
         result = 31 * result + (prov != null ? prov.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (area != null ? area.hashCode() : 0);
         result = 31 * result + (detail != null ? detail.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (tel != null ? tel.hashCode() : 0);

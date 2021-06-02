@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.UserAddressEntity;
-import zucc.dorm316.anzu.entity.UserEntity;
 import zucc.dorm316.anzu.service.TblUserAddressService;
-import zucc.dorm316.anzu.service.TblUserService;
-
 import java.util.List;
 
 @Transactional
@@ -72,13 +69,14 @@ public class TblUserAddressController {
     public JSONObject addUserAddress(@RequestParam(value = "user_id")int user_id,
                               @RequestParam(value = "prov")String prov,
                               @RequestParam(value = "city")String city,
+                              @RequestParam(value = "area")String area,
                               @RequestParam(value = "detail")String detail,
-                              @RequestParam(value = "name",required=false)String name,
-                              @RequestParam(value = "tel",required=false)String tel)
+                              @RequestParam(value = "name")String name,
+                              @RequestParam(value = "tel")String tel)
     {
         JSONObject result=new JSONObject();
         try {
-               tblUserAddressService.addUserAddress(user_id, prov, city, detail, name, tel);
+               tblUserAddressService.addUserAddress(user_id, prov, city, area,detail, name, tel);
                 result.put("port","200");
         }
         catch (Exception e){
@@ -92,6 +90,7 @@ public class TblUserAddressController {
     public JSONObject modifyUserAddress(@RequestParam(value = "user_id")int user_id,
                               @RequestParam(value = "prov")String prov,
                               @RequestParam(value = "city")String city,
+                              @RequestParam(value = "area")String area,
                               @RequestParam(value = "detail")String detail,
                               @RequestParam(value = "name",required=false)String name,
                               @RequestParam(value = "tel",required=false)String tel,
@@ -99,7 +98,7 @@ public class TblUserAddressController {
     {
         JSONObject result=new JSONObject();
         try {
-            tblUserAddressService.modifyUserAddress(user_id, prov, city, detail, name, tel,id);
+            tblUserAddressService.modifyUserAddress(user_id, prov, city, area,detail, name, tel,id);
             result.put("port","200");
         }
         catch (Exception e){

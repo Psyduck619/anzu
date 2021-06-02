@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import zucc.dorm316.anzu.entity.UserEntity;
 
-
 @Transactional
 public interface TblUserDAO extends JpaRepository<UserEntity,Integer> {
     @Query(value = "select * from user where account = ?",nativeQuery = true)
@@ -21,10 +20,10 @@ public interface TblUserDAO extends JpaRepository<UserEntity,Integer> {
     void deleteUserByUserAccount(String Account);
 
     @Modifying
-    @Query(value = "insert into user(account,password,username,sex,tel,email,balance) values (?,?,?,?,?,?,?)",nativeQuery = true)
-    void addUser(String account,String password,String userName,int sex,String tel,String email,double balance);
+    @Query(value = "insert into user(account,password,username,balance) values (?,?,?,?)",nativeQuery = true)
+    void addUser(String account,String password,String userName,double balance);
 
     @Modifying
-    @Query(value = "update user set account = ?, password = ?,username=?,sex=?,tel=?,email=?,balance=? where id =?",nativeQuery = true)
-    void modifyUser(String account,String password,String userName,int sex,String tel,String email,double balance,int id);
+    @Query(value = "update user set account = ?, password = ?,username=?,balance=? where id =?",nativeQuery = true)
+    void modifyUser(String account,String password,String userName,double balance,int id);
 }

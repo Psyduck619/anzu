@@ -4,46 +4,45 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import zucc.dorm316.anzu.entity.UserEntity;
-import zucc.dorm316.anzu.service.TblUserService;
-
+import zucc.dorm316.anzu.entity.MerchantEntity;
+import zucc.dorm316.anzu.service.TblMerchantService;
 
 @Transactional
 @RestController
 @CrossOrigin
-@RequestMapping(value="/user")
-public class TblUserController {
+@RequestMapping(value="/merchant")
+public class TblMerchantController {
     @Autowired
-    TblUserService tblUserService;
+    TblMerchantService tblMerchantService;
     @RequestMapping(value="/login",method= RequestMethod.GET)
 
     public JSONObject login(@RequestParam(value = "account") String account,
-                                 @RequestParam(value = "password") String password){
-        UserEntity userEntity = tblUserService.findByUserAccount(account);
+                            @RequestParam(value = "password") String password){
+        MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
         JSONObject result=new JSONObject();
-        if (userEntity == null)
+        if (merchantEntity == null)
         {
             result.put("port","500");     //无该用户
-            result.put("msg","无该用户");
+            result.put("msg","无此用户");
             return result;
         }
-        else if(!userEntity.getPassword().equals(password)){
-            result.put("port","400");      //密码错误
-            result.put("msg","密码错误");
+        else if(!merchantEntity.getPassword().equals(password)){
+            result.put("port","400");
+            result.put("msg","密码错误");   //密码错误
             return result;
         }
         else{
             result.put("port","200");
-            result.put("data",userEntity);
+            result.put("data",merchantEntity);
             return result;
         }
     }
 
     @RequestMapping(value="/findByAccount",method= RequestMethod.GET)
-    public JSONObject findByAccount(@RequestParam(value = "account") String account){
-        UserEntity userEntity = tblUserService.findByUserAccount(account);
+    public JSONObject findBy(@RequestParam(value = "account") String account){
+        MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
         JSONObject result=new JSONObject();
-        if (userEntity == null)
+        if (merchantEntity == null)
         {
             result.put("port","500");
             result.put("msg","无该用户");
@@ -51,7 +50,7 @@ public class TblUserController {
         }
         else{
             result.put("port","200");
-            result.put("data",userEntity);
+            result.put("data",merchantEntity);
             return result;
         }
     }
@@ -61,7 +60,7 @@ public class TblUserController {
     {
         JSONObject result=new JSONObject();
         try {
-            tblUserService.deleteUserByUserAccount(account);
+            tblMerchantService.deleteUserByMerchantAccount(account);
             result.put("port","200");
         }
         catch (Exception e){
@@ -76,7 +75,7 @@ public class TblUserController {
     {
         JSONObject result=new JSONObject();
         try {
-            tblUserService.deleteUserByUserid(id);
+            tblMerchantService.deleteMerchantByMerchantId(id);
             result.put("port","200");
         }
         catch (Exception e){
@@ -89,16 +88,17 @@ public class TblUserController {
     @RequestMapping(value="/add",method= RequestMethod.POST)
     public JSONObject addUser(@RequestParam(value = "account")String account,
                               @RequestParam(value = "password")String password,
-                              @RequestParam(value = "userName")String userName)
+                              @RequestParam(value = "merchant_name")String merchant_name
+                              )
     {
         JSONObject result=new JSONObject();
         try {
-            if (tblUserService.findByUserAccount(account) != null){
+            if (tblMerchantService.findByMerchantAccount(account) != null){
                 result.put("port","400");
                 result.put("msg","该账户已存在");
             }
             else{
-                tblUserService.addUser(account,password,userName,0);
+                tblMerchantService.addMerchant(account,password,merchant_name,0,0);
                 result.put("port","200");
             }
         }
@@ -111,12 +111,12 @@ public class TblUserController {
 
     @RequestMapping(value="/modifyInfo",method= RequestMethod.POST)
     public JSONObject modifyUserInfo(@RequestParam(value = "account")String account,
-                              @RequestParam(value = "userName")String userName)
+                                     @RequestParam(value = "merchant_name")String merchant_name)
     {
         JSONObject result=new JSONObject();
         try {
-            UserEntity user = tblUserService.findByUserAccount(account);
-            tblUserService.modifyUser(user.getId(),account,user.getPassword(),userName,user.getBalance());
+            MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
+            tblMerchantService.modifyMerchant(merchantEntity.getId(),account,merchantEntity.getPassword(),merchant_name,merchantEntity.getBalance(),merchantEntity.getAdminFlag());
             result.put("port","200");
         }
         catch (Exception e){
@@ -128,13 +128,13 @@ public class TblUserController {
 
     @RequestMapping(value="/modifyPassword",method= RequestMethod.POST)
     public JSONObject modifyUserPassword(@RequestParam(value = "account")String account,
-                                     @RequestParam(value = "password")String password
+                                         @RequestParam(value = "password")String password
     )
     {
         JSONObject result=new JSONObject();
         try {
-            UserEntity user = tblUserService.findByUserAccount(account);
-            tblUserService.modifyUser(user.getId(),account,password,user.getUsername(),user.getBalance());
+            MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
+            tblMerchantService.modifyMerchant(merchantEntity.getId(),account,password,merchantEntity.getMerchantName(),merchantEntity.getBalance(), merchantEntity.getAdminFlag());
             result.put("port","200");
         }
         catch (Exception e){
@@ -146,19 +146,19 @@ public class TblUserController {
 
     @RequestMapping(value="/modifyBalance",method= RequestMethod.POST)
     public JSONObject modifyUserBalance(@RequestParam(value = "account")String account,
-                                     @RequestParam(value = "difBalance")double difBalance   //传入差值金额
+                                        @RequestParam(value = "difBalance")double difBalance   //传入差值金额
     )
     {
         JSONObject result=new JSONObject();
         try {
-            UserEntity user = tblUserService.findByUserAccount(account);
-            if (user.getBalance()+difBalance < 0){
+            MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
+            if (merchantEntity.getBalance()+difBalance < 0){
                 result.put("port","400");
                 result.put("msg","余额不足");
             }
             else
             {
-                tblUserService.modifyUser(user.getId(),account,user.getPassword(),user.getUsername(),user.getBalance()+difBalance);
+                tblMerchantService.modifyMerchant(merchantEntity.getId(),account,merchantEntity.getPassword(),merchantEntity.getMerchantName(),merchantEntity.getBalance()+difBalance,merchantEntity.getAdminFlag());
                 result.put("port","200");
             }
         }

@@ -1,16 +1,13 @@
 ### 用户信息表
 
-![image-20210601211648101](description.assets/image-20210601211648101.png)
+![image-20210602230230737](description.assets/image-20210602230230737.png)
 
 ```sql
 CREATE TABLE user(
     id INT NOT NULL AUTO_INCREMENT  COMMENT 'id 用户id号' ,
-    account VARCHAR(32) NOT NULL   COMMENT 'account 用户账号' ,
+    account VARCHAR(32) NOT NULL   COMMENT 'account 用户账号-->手机号注册' ,
     password VARCHAR(32) NOT NULL   COMMENT 'password 用户密码' ,
     username VARCHAR(32) NOT NULL   COMMENT 'username 用户昵称' ,
-    sex INT NOT NULL   COMMENT 'sex 性别 0男性 1女性' ,
-    tel VARCHAR(32)    COMMENT 'tel 用户手机号码' ,
-    email VARCHAR(32)    COMMENT 'email 用户邮箱' ,
     balance DECIMAL(32,10) NOT NULL  DEFAULT 0.0 COMMENT 'balance 用户余额' ,
     PRIMARY KEY (id)
 ) COMMENT = 'user 用户信息表';
@@ -20,7 +17,7 @@ CREATE TABLE user(
 
 ### 用户地址表
 
-![image-20210531221801511](description.assets/image-20210531221801511.png)
+![image-20210602230505751](description.assets/image-20210602230505751.png)
 
 ```sql
 CREATE TABLE user_address(
@@ -28,7 +25,8 @@ CREATE TABLE user_address(
     user_id INT NOT NULL   COMMENT 'user_id 用户id' ,
     prov VARCHAR(32) NOT NULL   COMMENT 'prov 省份' ,
     city VARCHAR(32) NOT NULL   COMMENT 'city 城市' ,
-    detail VARCHAR(32) NOT NULL   COMMENT 'detail 具体区域' ,
+    area VARCHAR(32) NOT NULL   COMMENT 'area 区' ,
+    detail VARCHAR(32) NOT NULL   COMMENT 'detail 具体地址' ,
     name VARCHAR(32) NOT NULL   COMMENT 'name 联系人姓名' ,
     tel VARCHAR(32) NOT NULL   COMMENT 'tel 联系人手机号码' ,
     PRIMARY KEY (id)
@@ -62,7 +60,7 @@ CREATE TABLE goods(
 
 ### 商品表
 
-![image-20210531222105506](description.assets/image-20210531222105506.png)
+![image-20210602231409022](description.assets/image-20210602231409022.png)
 
 ```sql
 CREATE TABLE goods(
@@ -71,15 +69,14 @@ CREATE TABLE goods(
     category_id INT NOT NULL   COMMENT 'category_id 商品分类id' ,
     merchant_id INT NOT NULL   COMMENT 'merchant_id 商家id' ,
     intro VARCHAR(32)    COMMENT 'intro 商品描述' ,
-    check_status INT NOT NULL   COMMENT 'check_status 审核状态 -1 审核失败 0 未审核 1 审核成功' ,
-    putaway_status INT NOT NULL   COMMENT 'putaway_status 上架状态 -1=>下架,1=>上架' ,
+    putaway_status INT NOT NULL   COMMENT 'status 上架状态 -1=>下架,0=>审核中，1=>上架' ,
+    pic_url VARCHAR(32) NOT NULL   COMMENT 'pic_url 图片地址' ,
     mode INT NOT NULL   COMMENT 'mode 租赁模式 1以租代售 2先租后买 3先租后买' ,
     deposit DECIMAL(32,10) NOT NULL   COMMENT 'deposit 押金' ,
     stock INT NOT NULL  DEFAULT 0 COMMENT 'stock 库存' ,
     sales INT NOT NULL  DEFAULT 0 COMMENT 'sales 销量' ,
     PRIMARY KEY (id)
 ) COMMENT = 'goods 商品表';
-
 ```
 
 
@@ -107,7 +104,7 @@ CREATE TABLE goods_statistics(
 
 ### 商家表
 
-![image-20210601212126772](description.assets/image-20210601212126772.png)
+![image-20210602231554444](description.assets/image-20210602231554444.png)
 
 ```sql
 CREATE TABLE merchant(
@@ -116,7 +113,6 @@ CREATE TABLE merchant(
     password VARCHAR(32) NOT NULL   COMMENT 'password 商家密码' ,
     merchant_name VARCHAR(32) NOT NULL   COMMENT 'merchant_name 商家名称' ,
     balance VARCHAR(32) NOT NULL   COMMENT 'balance 商家账户余额' ,
-    tel VARCHAR(32) NOT NULL   COMMENT 'tel 商家手机号码' ,
     admin_flag VARCHAR(32) NOT NULL  DEFAULT 0 COMMENT 'admin_flag 管理员标记 0代表非管理员 1代表管理员' ,
     PRIMARY KEY (id)
 ) COMMENT = 'merchant 商家表';
@@ -126,7 +122,7 @@ CREATE TABLE merchant(
 
 ### 商家地址表
 
-![image-20210531222923003](description.assets/image-20210531222923003.png)
+![image-20210602231721194](description.assets/image-20210602231721194.png)
 
 ```sql
 CREATE TABLE merchant_address(
@@ -134,6 +130,7 @@ CREATE TABLE merchant_address(
     user_id INT NOT NULL   COMMENT 'merchant_id 商家id' ,
     prov VARCHAR(32) NOT NULL   COMMENT 'prov 省份' ,
     city VARCHAR(32) NOT NULL   COMMENT 'city 城市' ,
+    area VARCHAR(32) NOT NULL   COMMENT 'area 区域' ,
     detail VARCHAR(32) NOT NULL   COMMENT 'detail 具体区域' ,
     name VARCHAR(32) NOT NULL   COMMENT 'name 联系人姓名' ,
     tel VARCHAR(32) NOT NULL   COMMENT 'tel 联系人手机号码' ,

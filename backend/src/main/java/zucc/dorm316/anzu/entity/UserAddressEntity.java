@@ -9,6 +9,7 @@ public class UserAddressEntity {
     private int userId;
     private String prov;
     private String city;
+    private String area;
     private String detail;
     private String name;
     private String tel;
@@ -54,6 +55,16 @@ public class UserAddressEntity {
     }
 
     @Basic
+    @Column(name = "area")
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    @Basic
     @Column(name = "detail")
     public String getDetail() {
         return detail;
@@ -94,6 +105,7 @@ public class UserAddressEntity {
         if (userId != that.userId) return false;
         if (prov != null ? !prov.equals(that.prov) : that.prov != null) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
+        if (area != null ? !area.equals(that.area) : that.area != null) return false;
         if (detail != null ? !detail.equals(that.detail) : that.detail != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (tel != null ? !tel.equals(that.tel) : that.tel != null) return false;
@@ -107,6 +119,7 @@ public class UserAddressEntity {
         result = 31 * result + userId;
         result = 31 * result + (prov != null ? prov.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (area != null ? area.hashCode() : 0);
         result = 31 * result + (detail != null ? detail.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (tel != null ? tel.hashCode() : 0);

@@ -9,8 +9,8 @@ public class MerchantEntity {
     private String account;
     private String password;
     private String merchantName;
-    private String balance;
-    private String tel;
+    private double balance;
+    private int adminFlag;
 
     @Id
     @Column(name = "id")
@@ -54,22 +54,22 @@ public class MerchantEntity {
 
     @Basic
     @Column(name = "balance")
-    public String getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
     @Basic
-    @Column(name = "tel")
-    public String getTel() {
-        return tel;
+    @Column(name = "admin_flag")
+    public int getAdminFlag() {
+        return adminFlag;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setAdminFlag(int adminFlag) {
+        this.adminFlag = adminFlag;
     }
 
     @Override
@@ -80,11 +80,11 @@ public class MerchantEntity {
         MerchantEntity that = (MerchantEntity) o;
 
         if (id != that.id) return false;
+        if (Double.compare(that.balance, balance) != 0) return false;
+        if (adminFlag != that.adminFlag) return false;
         if (account != null ? !account.equals(that.account) : that.account != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (merchantName != null ? !merchantName.equals(that.merchantName) : that.merchantName != null) return false;
-        if (balance != null ? !balance.equals(that.balance) : that.balance != null) return false;
-        if (tel != null ? !tel.equals(that.tel) : that.tel != null) return false;
 
         return true;
     }
@@ -92,11 +92,13 @@ public class MerchantEntity {
     @Override
     public int hashCode() {
         int result = id;
+        long temp;
         result = 31 * result + (account != null ? account.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (merchantName != null ? merchantName.hashCode() : 0);
-        result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        result = 31 * result + (tel != null ? tel.hashCode() : 0);
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + adminFlag;
         return result;
     }
 }

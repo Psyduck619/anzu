@@ -10,8 +10,8 @@ public class GoodsEntity {
     private int categoryId;
     private int merchantId;
     private String intro;
-    private int checkStatus;
-    private int putawayStatus;
+    private int status;
+    private String picUrl;
     private int mode;
     private double deposit;
     private int stock;
@@ -68,23 +68,23 @@ public class GoodsEntity {
     }
 
     @Basic
-    @Column(name = "check_status")
-    public int getCheckStatus() {
-        return checkStatus;
+    @Column(name = "status")
+    public int getStatus() {
+        return status;
     }
 
-    public void setCheckStatus(int checkStatus) {
-        this.checkStatus = checkStatus;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Basic
-    @Column(name = "putaway_status")
-    public int getPutawayStatus() {
-        return putawayStatus;
+    @Column(name = "pic_url")
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setPutawayStatus(int putawayStatus) {
-        this.putawayStatus = putawayStatus;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Basic
@@ -137,14 +137,14 @@ public class GoodsEntity {
         if (id != that.id) return false;
         if (categoryId != that.categoryId) return false;
         if (merchantId != that.merchantId) return false;
-        if (checkStatus != that.checkStatus) return false;
-        if (putawayStatus != that.putawayStatus) return false;
+        if (status != that.status) return false;
         if (mode != that.mode) return false;
         if (Double.compare(that.deposit, deposit) != 0) return false;
         if (stock != that.stock) return false;
         if (sales != that.sales) return false;
         if (goodsName != null ? !goodsName.equals(that.goodsName) : that.goodsName != null) return false;
         if (intro != null ? !intro.equals(that.intro) : that.intro != null) return false;
+        if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
 
         return true;
     }
@@ -158,8 +158,8 @@ public class GoodsEntity {
         result = 31 * result + categoryId;
         result = 31 * result + merchantId;
         result = 31 * result + (intro != null ? intro.hashCode() : 0);
-        result = 31 * result + checkStatus;
-        result = 31 * result + putawayStatus;
+        result = 31 * result + status;
+        result = 31 * result + (picUrl != null ? picUrl.hashCode() : 0);
         result = 31 * result + mode;
         temp = Double.doubleToLongBits(deposit);
         result = 31 * result + (int) (temp ^ (temp >>> 32));

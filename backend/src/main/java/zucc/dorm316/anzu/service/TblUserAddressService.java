@@ -9,7 +9,7 @@ import java.util.List;
 public interface TblUserAddressService{
     List<UserAddressEntity> findAllByUserid(int user_id);
     UserAddressEntity findById(int id);
-    void addUserAddress(int user_id,String prov,String city,String detail,String name,String tel);
+    void addUserAddress(int user_id,String prov,String city,String area,String detail,String name,String tel);
     void deleteUserAddressById(int id);
-    void modifyUserAddress(int user_id,String prov,String city,String detail,String name,String tel,int id);
+    void modifyUserAddress(int user_id,String prov,String city,String area,String detail,String name,String tel,int id);
 }

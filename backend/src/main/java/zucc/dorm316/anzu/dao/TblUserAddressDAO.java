@@ -16,14 +16,14 @@ public interface TblUserAddressDAO extends JpaRepository<UserAddressEntity,Integ
     UserAddressEntity findById(int id);
 
     @Modifying
-    @Query(value = "insert into user_address(user_id,prov,city,detail,name,tel,sign) values (?,?,?,?,?,?,?)",nativeQuery = true)
-    void addUserAddress(int user_id,String prov,String city,String detail,String name,String tel);
+    @Query(value = "insert into user_address(user_id,prov,city,area,detail,name,tel) values (?,?,?,?,?,?,?)",nativeQuery = true)
+    void addUserAddress(int user_id,String prov,String city,String area,String detail,String name,String tel);
 
     @Modifying
     @Query(value = "delete from user_address where id = ?",nativeQuery = true)
     void deleteUserAddressById(int id);
 
     @Modifying
-    @Query(value = "update user_address set user_id = ?,prov=?,city=?,detail=?,name=?,tel=? where  id= ?",nativeQuery = true)
-    void modifyUserAddress(int user_id,String prov,String city,String detail,String name,String tel,int id);
+    @Query(value = "update user_address set user_id = ?,prov=?,city=?,area=?,detail=?,name=?,tel=? where  id= ?",nativeQuery = true)
+    void modifyUserAddress(int user_id,String prov,String city,String area,String detail,String name,String tel,int id);
 }
