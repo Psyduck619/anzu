@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.GoodsEntity;
 import zucc.dorm316.anzu.service.TblGoodsService;
 
-
 import java.util.List;
 
 @Transactional
@@ -103,6 +102,7 @@ public class TblGoodsController {
 
     @RequestMapping(value="/add",method= RequestMethod.POST)
     public JSONObject addGoods(@RequestParam(value = "goods_name")String goods_name,
+                               @RequestParam(value = "price")double price,
                                      @RequestParam(value = "category_id")int category_id,
                                      @RequestParam(value = "merchant_id")int merchant_id,
                                      @RequestParam(value = "intro")String intro,
@@ -115,7 +115,7 @@ public class TblGoodsController {
     {
         JSONObject result=new JSONObject();
         try {
-            tblGoodsService.addGoods(goods_name,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,sales);
+            tblGoodsService.addGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,sales);
             result.put("port","200");
         }
         catch (Exception e){
@@ -127,6 +127,7 @@ public class TblGoodsController {
 
     @RequestMapping(value="/modify",method= RequestMethod.POST)
     public JSONObject modifyGoods(@RequestParam(value = "goods_name")String goods_name,
+                                  @RequestParam(value = "price")double price,
                                     @RequestParam(value = "category_id")int category_id,
                                     @RequestParam(value = "merchant_id")int merchant_id,
                                     @RequestParam(value = "intro")String intro,
@@ -140,7 +141,7 @@ public class TblGoodsController {
     {
         JSONObject result=new JSONObject();
         try {
-            tblGoodsService.modifyGoods(goods_name,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,sales,id);
+            tblGoodsService.modifyGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,sales,id);
             result.put("port","200");
         }
         catch (Exception e){

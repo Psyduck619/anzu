@@ -15,10 +15,10 @@ public class GoodsOrderEntity {
     private int merchantAddressId;
     private int orderStatus;
     private int goodsNum;
-    private BigDecimal goodsTotalPrice;
+    private double goodsTotalPrice;
     private Timestamp receivingTime;
-    private long leaseTime;
-    private BigDecimal deposit;
+    private int leaseTime;
+    private double deposit;
 
     @Id
     @Column(name = "id")
@@ -102,11 +102,11 @@ public class GoodsOrderEntity {
 
     @Basic
     @Column(name = "goods_total_price")
-    public BigDecimal getGoodsTotalPrice() {
+    public double getGoodsTotalPrice() {
         return goodsTotalPrice;
     }
 
-    public void setGoodsTotalPrice(BigDecimal goodsTotalPrice) {
+    public void setGoodsTotalPrice(double goodsTotalPrice) {
         this.goodsTotalPrice = goodsTotalPrice;
     }
 
@@ -122,21 +122,21 @@ public class GoodsOrderEntity {
 
     @Basic
     @Column(name = "lease_time")
-    public long getLeaseTime() {
+    public int getLeaseTime() {
         return leaseTime;
     }
 
-    public void setLeaseTime(long leaseTime) {
+    public void setLeaseTime(int leaseTime) {
         this.leaseTime = leaseTime;
     }
 
     @Basic
     @Column(name = "deposit")
-    public BigDecimal getDeposit() {
+    public double getDeposit() {
         return deposit;
     }
 
-    public void setDeposit(BigDecimal deposit) {
+    public void setDeposit(double deposit) {
         this.deposit = deposit;
     }
 
@@ -156,11 +156,8 @@ public class GoodsOrderEntity {
         if (orderStatus != that.orderStatus) return false;
         if (goodsNum != that.goodsNum) return false;
         if (leaseTime != that.leaseTime) return false;
-        if (goodsTotalPrice != null ? !goodsTotalPrice.equals(that.goodsTotalPrice) : that.goodsTotalPrice != null)
-            return false;
         if (receivingTime != null ? !receivingTime.equals(that.receivingTime) : that.receivingTime != null)
             return false;
-        if (deposit != null ? !deposit.equals(that.deposit) : that.deposit != null) return false;
 
         return true;
     }
@@ -175,10 +172,8 @@ public class GoodsOrderEntity {
         result = 31 * result + merchantAddressId;
         result = 31 * result + orderStatus;
         result = 31 * result + goodsNum;
-        result = 31 * result + (goodsTotalPrice != null ? goodsTotalPrice.hashCode() : 0);
         result = 31 * result + (receivingTime != null ? receivingTime.hashCode() : 0);
         result = 31 * result + (int) (leaseTime ^ (leaseTime >>> 32));
-        result = 31 * result + (deposit != null ? deposit.hashCode() : 0);
         return result;
     }
 }

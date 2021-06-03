@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import zucc.dorm316.anzu.dao.TblGoodsDAO;
 import zucc.dorm316.anzu.entity.GoodsEntity;
 import zucc.dorm316.anzu.service.TblGoodsService;
-
 import java.util.List;
 
 @Service
@@ -38,13 +37,13 @@ public class TblGoodsServiceImpl implements TblGoodsService {
     }
 
     @Override
-    public void addGoods(String goods_name, int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales) {
-        tblGoodsDAO.addGoods(goods_name, category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales);
+    public void addGoods(String goods_name,double price, int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales) {
+        tblGoodsDAO.addGoods(goods_name, price,category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales);
     }
 
     @Override
-    public void modifyGoods(String goods_name, int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales, int id) {
-        tblGoodsDAO.modifyGoods(goods_name, category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales, id);
+    public void modifyGoods(String goods_name, double price,int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales, int id) {
+        tblGoodsDAO.modifyGoods(goods_name, price,category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales, id);
     }
 
     @Override

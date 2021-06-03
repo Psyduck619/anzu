@@ -10,7 +10,7 @@ public class AftersalesEntity {
     private int refundType;
     private int goodsStatus;
     private String reason;
-    private String processingStatus;
+    private int processingStatus;
     private String feedback;
 
     @Id
@@ -65,11 +65,11 @@ public class AftersalesEntity {
 
     @Basic
     @Column(name = "processing_status")
-    public String getProcessingStatus() {
+    public int getProcessingStatus() {
         return processingStatus;
     }
 
-    public void setProcessingStatus(String processingStatus) {
+    public void setProcessingStatus(int processingStatus) {
         this.processingStatus = processingStatus;
     }
 
@@ -95,8 +95,6 @@ public class AftersalesEntity {
         if (refundType != that.refundType) return false;
         if (goodsStatus != that.goodsStatus) return false;
         if (reason != null ? !reason.equals(that.reason) : that.reason != null) return false;
-        if (processingStatus != null ? !processingStatus.equals(that.processingStatus) : that.processingStatus != null)
-            return false;
         if (feedback != null ? !feedback.equals(that.feedback) : that.feedback != null) return false;
 
         return true;
@@ -109,7 +107,6 @@ public class AftersalesEntity {
         result = 31 * result + refundType;
         result = 31 * result + goodsStatus;
         result = 31 * result + (reason != null ? reason.hashCode() : 0);
-        result = 31 * result + (processingStatus != null ? processingStatus.hashCode() : 0);
         result = 31 * result + (feedback != null ? feedback.hashCode() : 0);
         return result;
     }

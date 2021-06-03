@@ -1,12 +1,14 @@
 package zucc.dorm316.anzu.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "goods", schema = "anzu", catalog = "")
 public class GoodsEntity {
     private int id;
     private String goodsName;
+    private double price;
     private int categoryId;
     private int merchantId;
     private String intro;
@@ -35,6 +37,16 @@ public class GoodsEntity {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    @Basic
+    @Column(name = "price")
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Basic

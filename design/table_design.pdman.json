@@ -319,6 +319,13 @@
               "notNull": true
             },
             {
+              "name": "price",
+              "type": "Double",
+              "remark": "价格",
+              "chnname": "price",
+              "notNull": true
+            },
+            {
               "name": "merchant_id",
               "type": "Integer",
               "remark": "商家id",
@@ -1055,7 +1062,7 @@
             },
             {
               "name": "processing_status",
-              "type": "DefaultString",
+              "type": "Integer",
               "remark": "订单处理状态 -1拒绝 0未处理 1已同意",
               "chnname": "processing_status",
               "notNull": true
