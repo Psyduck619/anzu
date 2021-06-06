@@ -16,6 +16,11 @@ public class TblUserServiceImpl implements TblUserService {
     private TblUserDAO tblUserDAO;
 
     @Override
+    public UserEntity findByUserId(int id) {
+        return tblUserDAO.findByUserId(id);
+    }
+
+    @Override
     public UserEntity findByUserAccount(String Account) {
         return tblUserDAO.findByUserAccount(Account);
     }

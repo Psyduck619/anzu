@@ -156,6 +156,20 @@
               "remark": "联系人手机号码",
               "chnname": "tel",
               "notNull": true
+            },
+            {
+              "name": "is_default",
+              "type": "Integer",
+              "remark": "是否为用户名默认地址 0否 1是",
+              "chnname": "is_default",
+              "notNull": true
+            },
+            {
+              "name": "address_code",
+              "type": "DefaultString",
+              "remark": "地址编码",
+              "chnname": "address_code",
+              "notNull": true
             }
           ],
           "indexs": [],

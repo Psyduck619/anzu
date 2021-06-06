@@ -6,6 +6,7 @@ import zucc.dorm316.anzu.entity.UserEntity;
 
 @Transactional
 public interface TblUserService {
+    UserEntity findByUserId(int id);
     UserEntity findByUserAccount(String Account);
     void deleteUserByUserid(int userid);
     void deleteUserByUserAccount(String Account);

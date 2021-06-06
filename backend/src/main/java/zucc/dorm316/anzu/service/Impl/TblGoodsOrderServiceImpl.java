@@ -38,13 +38,13 @@ public class TblGoodsOrderServiceImpl implements TblGoodsOrderService {
     }
 
     @Override
-    public void addGoodsOrder(int user_id, int goods_id, int user_address, int merchant_address, int order_status, int goods_num, double goods_total_price, Date receiving_time, int lease_time, double deposit) {
-        tblGoodsOrderDAO.addGoodsOrder(user_id, goods_id, user_address, merchant_address, order_status, goods_num, goods_total_price, receiving_time, lease_time, deposit);
+    public void addGoodsOrder(int user_id, int goods_id, int merchant_id, int user_address, int merchant_address, int order_status, int goods_num, double goods_total_price, Date receiving_time, int lease_time, double deposit) {
+        tblGoodsOrderDAO.addGoodsOrder(user_id, goods_id, merchant_id,user_address, merchant_address, order_status, goods_num, goods_total_price, receiving_time, lease_time, deposit);
     }
 
     @Override
-    public void modifyGoodsOrder(int user_id, int goods_id, int user_address, int merchant_address, int order_status, int goods_num, double goods_total_price, Date receiving_time, int lease_time, double deposit, int id) {
-        tblGoodsOrderDAO.modifyGoodsOrder(user_id, goods_id, user_address, merchant_address, order_status, goods_num, goods_total_price, receiving_time, lease_time, deposit, id);
+    public void modifyGoodsOrder(int user_id, int goods_id, int merchant_id, int user_address, int merchant_address, int order_status, int goods_num, double goods_total_price, Date receiving_time, int lease_time, double deposit, int id) {
+        tblGoodsOrderDAO.modifyGoodsOrder(user_id, goods_id, merchant_id,user_address, merchant_address, order_status, goods_num, goods_total_price, receiving_time, lease_time, deposit, id);
     }
 
     @Override

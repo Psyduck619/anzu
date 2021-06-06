@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class AftersalesEntity {
     private int id;
     private int orderId;
-    private int refundType;
     private int goodsStatus;
     private String reason;
     private int processingStatus;
@@ -33,15 +32,6 @@ public class AftersalesEntity {
         this.orderId = orderId;
     }
 
-    @Basic
-    @Column(name = "refund_type")
-    public int getRefundType() {
-        return refundType;
-    }
-
-    public void setRefundType(int refundType) {
-        this.refundType = refundType;
-    }
 
     @Basic
     @Column(name = "goods_status")
@@ -92,7 +82,6 @@ public class AftersalesEntity {
 
         if (id != that.id) return false;
         if (orderId != that.orderId) return false;
-        if (refundType != that.refundType) return false;
         if (goodsStatus != that.goodsStatus) return false;
         if (reason != null ? !reason.equals(that.reason) : that.reason != null) return false;
         if (feedback != null ? !feedback.equals(that.feedback) : that.feedback != null) return false;
@@ -104,7 +93,6 @@ public class AftersalesEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + orderId;
-        result = 31 * result + refundType;
         result = 31 * result + goodsStatus;
         result = 31 * result + (reason != null ? reason.hashCode() : 0);
         result = 31 * result + (feedback != null ? feedback.hashCode() : 0);

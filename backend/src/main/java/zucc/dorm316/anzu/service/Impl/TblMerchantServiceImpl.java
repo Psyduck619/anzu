@@ -1,5 +1,6 @@
 package zucc.dorm316.anzu.service.Impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,11 @@ public class TblMerchantServiceImpl implements TblMerchantService {
     @Autowired
     private TblMerchantDAO tblMerchantDAO;
 
+
+    @Override
+    public MerchantEntity findByMerchantId(int id) {
+        return tblMerchantDAO.findByMerchantId(id);
+    }
 
     @Override
     public MerchantEntity findByMerchantAccount(String Account) {

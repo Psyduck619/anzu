@@ -11,7 +11,6 @@ public class CommentStatisticEntity {
     private int rate;
     private int descStar;
     private int logisticsStart;
-    private int untitled;
 
     @Id
     @Column(name = "id")
@@ -73,15 +72,6 @@ public class CommentStatisticEntity {
         this.logisticsStart = logisticsStart;
     }
 
-    @Basic
-    @Column(name = "untitled")
-    public int getUntitled() {
-        return untitled;
-    }
-
-    public void setUntitled(int untitled) {
-        this.untitled = untitled;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -95,7 +85,6 @@ public class CommentStatisticEntity {
         if (rate != that.rate) return false;
         if (descStar != that.descStar) return false;
         if (logisticsStart != that.logisticsStart) return false;
-        if (untitled != that.untitled) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
 
         return true;
@@ -109,7 +98,6 @@ public class CommentStatisticEntity {
         result = 31 * result + rate;
         result = 31 * result + descStar;
         result = 31 * result + logisticsStart;
-        result = 31 * result + untitled;
         return result;
     }
 }

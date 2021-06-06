@@ -15,22 +15,22 @@ public class TblGoodsStatisticController {
     @Autowired
     TblGoodsStatisticService tblGoodsStatisticService;
 
-    @RequestMapping(value="/findById",method= RequestMethod.GET)
-    public JSONObject findById(@RequestParam(value = "id") int id){
-        GoodsStatisticsEntity goodsStatisticsEntity = tblGoodsStatisticService.findById(id);
-        JSONObject result=new JSONObject();
-        if (goodsStatisticsEntity == null)
-        {
-            result.put("port","500");
-            result.put("msg","无该统计信息");
-            return result;
-        }
-        else{
-            result.put("port","200");
-            result.put("data",goodsStatisticsEntity);
-            return result;
-        }
-    }
+//    @RequestMapping(value="/findById",method= RequestMethod.GET)
+//    public JSONObject findById(@RequestParam(value = "id") int id){
+//        GoodsStatisticsEntity goodsStatisticsEntity = tblGoodsStatisticService.findById(id);
+//        JSONObject result=new JSONObject();
+//        if (goodsStatisticsEntity == null)
+//        {
+//            result.put("port","500");
+//            result.put("msg","无该统计信息");
+//            return result;
+//        }
+//        else{
+//            result.put("port","200");
+//            result.put("data",goodsStatisticsEntity);
+//            return result;
+//        }
+//    }
 
     @RequestMapping(value="/findByGoodsId",method= RequestMethod.GET)
     public JSONObject findByGoodsId(@RequestParam(value = "goods_id") int goods_id){
@@ -49,20 +49,20 @@ public class TblGoodsStatisticController {
         }
     }
 
-    @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
-    public JSONObject deleteGoodsStatisticById(@RequestParam(value = "id") int id)
-    {
-        JSONObject result=new JSONObject();
-        try {
-            tblGoodsStatisticService.deleteGoodsStatistic(id);
-            result.put("port","200");
-        }
-        catch (Exception e){
-            result.put("port","500");
-            result.put("msg","删除异常");
-        }
-        return result;
-    }
+//    @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
+//    public JSONObject deleteGoodsStatisticById(@RequestParam(value = "id") int id)
+//    {
+//        JSONObject result=new JSONObject();
+//        try {
+//            tblGoodsStatisticService.deleteGoodsStatistic(id);
+//            result.put("port","200");
+//        }
+//        catch (Exception e){
+//            result.put("port","500");
+//            result.put("msg","删除异常");
+//        }
+//        return result;
+//    }
 
     @RequestMapping(value="/add",method= RequestMethod.POST)
     public JSONObject addGoodsStatistics(@RequestParam(value = "goods_id")int goods_id)

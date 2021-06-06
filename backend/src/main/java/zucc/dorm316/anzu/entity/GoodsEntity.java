@@ -1,14 +1,13 @@
 package zucc.dorm316.anzu.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "goods", schema = "anzu", catalog = "")
 public class GoodsEntity {
     private int id;
     private String goodsName;
-    private double price;
+    private Double price;
     private int categoryId;
     private int merchantId;
     private String intro;
@@ -18,6 +17,7 @@ public class GoodsEntity {
     private double deposit;
     private int stock;
     private int sales;
+    private int leaseTime;
 
     @Id
     @Column(name = "id")
@@ -41,11 +41,11 @@ public class GoodsEntity {
 
     @Basic
     @Column(name = "price")
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -139,6 +139,16 @@ public class GoodsEntity {
         this.sales = sales;
     }
 
+    @Basic
+    @Column(name = "lease_time")
+    public int getLeaseTime() {
+        return leaseTime;
+    }
+
+    public void setLeaseTime(int leaseTime) {
+        this.leaseTime = leaseTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -154,7 +164,9 @@ public class GoodsEntity {
         if (Double.compare(that.deposit, deposit) != 0) return false;
         if (stock != that.stock) return false;
         if (sales != that.sales) return false;
+        if (leaseTime != that.leaseTime) return false;
         if (goodsName != null ? !goodsName.equals(that.goodsName) : that.goodsName != null) return false;
+        if (price != null ? !price.equals(that.price) : that.price != null) return false;
         if (intro != null ? !intro.equals(that.intro) : that.intro != null) return false;
         if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
 
@@ -167,6 +179,7 @@ public class GoodsEntity {
         long temp;
         result = id;
         result = 31 * result + (goodsName != null ? goodsName.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + categoryId;
         result = 31 * result + merchantId;
         result = 31 * result + (intro != null ? intro.hashCode() : 0);
@@ -177,6 +190,7 @@ public class GoodsEntity {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + stock;
         result = 31 * result + sales;
+        result = 31 * result + leaseTime;
         return result;
     }
 }

@@ -1,5 +1,6 @@
 package zucc.dorm316.anzu.service.Impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import zucc.dorm316.anzu.service.TblGoodsStatisticService;
 @Transactional
 @Component
 public class TblGoodsStatisticServiceImpl implements TblGoodsStatisticService {
+    @Autowired
     private TblGoodsStatisticDAO tblGoodsStatisticDAO;
 
     @Override

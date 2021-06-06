@@ -5,6 +5,7 @@ import zucc.dorm316.anzu.entity.MerchantEntity;
 
 @Transactional
 public interface TblMerchantService {
+    MerchantEntity findByMerchantId(int id);
     MerchantEntity findByMerchantAccount(String Account);
     void deleteMerchantByMerchantId(int merchant_id);
     void deleteUserByMerchantAccount(String Account);

@@ -8,6 +8,10 @@ import zucc.dorm316.anzu.entity.UserEntity;
 
 @Transactional
 public interface TblUserDAO extends JpaRepository<UserEntity,Integer> {
+
+    @Query(value = "select * from user where id = ?",nativeQuery = true)
+    UserEntity findByUserId(int id);
+
     @Query(value = "select * from user where account = ?",nativeQuery = true)
     UserEntity findByUserAccount(String Account);
 

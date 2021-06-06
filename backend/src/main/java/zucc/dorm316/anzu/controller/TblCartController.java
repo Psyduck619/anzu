@@ -67,7 +67,7 @@ public class TblCartController {
     }
 
     @RequestMapping(value="/add",method= RequestMethod.POST)
-    public JSONObject addUserAddress(@RequestParam(value = "user_id")int user_id,
+    public JSONObject addCart(@RequestParam(value = "user_id")int user_id,
                                      @RequestParam(value = "goods_id")int goods_id,
                                      @RequestParam(value = "goods_num")int goods_num)
     {
@@ -84,18 +84,13 @@ public class TblCartController {
     }
 
     @RequestMapping(value="/modify",method= RequestMethod.POST)
-    public JSONObject modifyUserAddress(@RequestParam(value = "user_id")int user_id,
-                                        @RequestParam(value = "goods_num")int goods_num,
-                                        @RequestParam(value = "id")int id )
+    public JSONObject modifyCart(@RequestParam(value = "goods_num")int goods_num,
+                                 @RequestParam(value = "id")int id )
     {
         JSONObject result=new JSONObject();
         try {
             CartEntity cartEntity = tblCartService.findById(id);
-            if(goods_num + cartEntity.getGoodsNum()<=0){
-                result.put("port","400");
-                result.put("msg","商品数量不得小于等于0");
-            }
-            tblCartService.modifyGoodsNum(user_id,cartEntity.getGoodsId(),goods_num,id);
+            tblCartService.modifyGoodsNum(cartEntity.getUserId(),cartEntity.getGoodsId(),goods_num,id);
             result.put("port","200");
         }
         catch (Exception e){

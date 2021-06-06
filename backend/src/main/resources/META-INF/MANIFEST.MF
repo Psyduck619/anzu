@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Main-Class: zucc.dorm316.anzu.AnzuApplication
+Class-Path: jackson-annotations-2.11.3.jar spring-boot-starter-web-2.4.0
+ .jar javassist-3.24.0-GA.jar attoparser-2.0.5.RELEASE.jar thymeleaf-spr
+ ing5-3.0.11.RELEASE.jar springfox-swagger-common-2.9.2.jar jackson-data
+ bind-2.11.3.jar spring-data-commons-2.4.1.jar snakeyaml-1.27.jar guava-
+ 20.0.jar hibernate-core-5.4.23.Final.jar spring-aspects-5.3.1.jar jakar
+ ta.persistence-api-2.2.3.jar spring-boot-starter-web-services-2.4.0.jar
+  fastjson-1.2.28.jar springfox-swagger2-2.9.2.jar jakarta.jws-api-2.1.0
+ .jar slf4j-api-1.7.30.jar HikariCP-3.4.5.jar swagger-annotations-1.5.20
+ .jar jackson-core-2.11.3.jar jakarta.annotation-api-1.3.5.jar spring-ox
+ m-5.3.1.jar byte-buddy-1.10.18.jar spring-data-jpa-2.4.1.jar spring-boo
+ t-starter-tomcat-2.4.0.jar springfox-swagger-ui-2.9.2.jar spring-boot-s
+ tarter-jdbc-2.4.0.jar jandex-2.1.3.Final.jar log4j-to-slf4j-2.13.3.jar 
+ spring-boot-starter-data-jdbc-2.4.0.jar swagger-models-1.5.20.jar sprin
+ gfox-schema-2.9.2.jar jakarta.xml.ws-api-2.3.3.jar spring-jdbc-5.3.1.ja
+ r thymeleaf-extras-java8time-3.0.4.RELEASE.jar spring-boot-starter-aop-
+ 2.4.0.jar hibernate-commons-annotations-5.1.2.Final.jar aspectjweaver-1
+ .9.6.jar jackson-datatype-jsr310-2.11.3.jar jaxb-runtime-2.3.3.jar log4
+ j-api-2.13.3.jar jackson-datatype-jdk8-2.11.3.jar jakarta.activation-1.
+ 2.2.jar spring-core-5.3.1.jar spring-tx-5.3.1.jar jboss-logging-3.4.1.F
+ inal.jar jul-to-slf4j-1.7.30.jar txw2-2.3.3.jar spring-ws-core-3.0.10.R
+ ELEASE.jar logback-classic-1.2.3.jar spring-xml-3.0.10.RELEASE.jar spri
+ ng-boot-2.3.5.RELEASE.jar dom4j-2.1.3.jar jackson-module-parameter-name
+ s-2.11.3.jar spring-boot-autoconfigure-2.3.5.RELEASE.jar spring-webmvc-
+ 5.3.1.jar spring-plugin-core-1.2.0.RELEASE.jar istack-commons-runtime-3
+ .0.11.jar spring-boot-starter-logging-2.4.0.jar antlr-2.7.7.jar spring-
+ orm-5.3.1.jar mapstruct-1.2.0.Final.jar spring-boot-starter-data-jpa-2.
+ 4.0.jar unbescape-1.1.6.RELEASE.jar saaj-impl-1.5.2.jar spring-boot-sta
+ rter-json-2.4.0.jar mysql-connector-java-8.0.22.jar spring-data-jdbc-2.
+ 1.1.jar tomcat-embed-core-9.0.39.jar tomcat-embed-websocket-9.0.39.jar 
+ classmate-1.5.1.jar springfox-spring-web-2.9.2.jar logback-core-1.2.3.j
+ ar stax-ex-1.8.3.jar jakarta.el-3.0.3.jar jakarta.xml.soap-api-1.4.2.ja
+ r spring-boot-starter-2.4.0.jar spring-plugin-metadata-1.2.0.RELEASE.ja
+ r spring-web-5.3.1.jar spring-expression-5.3.1.jar spring-jcl-5.3.1.jar
+  spring-context-5.3.1.jar spring-boot-starter-thymeleaf-2.4.0.jar jakar
+ ta.xml.bind-api-2.3.3.jar thymeleaf-3.0.11.RELEASE.jar jakarta.transact
+ ion-api-1.3.3.jar spring-beans-5.3.1.jar spring-aop-5.3.1.jar spring-da
+ ta-relational-2.1.1.jar springfox-spi-2.9.2.jar jakarta.activation-api-
+ 1.2.2.jar springfox-core-2.9.2.jar
+

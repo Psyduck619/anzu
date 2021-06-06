@@ -17,6 +17,11 @@ public class TblGoodsServiceImpl implements TblGoodsService {
     private TblGoodsDAO tblGoodsDAO;
 
     @Override
+    public List<GoodsEntity> findAll() {
+        return tblGoodsDAO.findAll();
+    }
+
+    @Override
     public List<GoodsEntity> findAllByCategory(int category_id) {
         return tblGoodsDAO.findAllByCategory(category_id);
     }
@@ -37,13 +42,13 @@ public class TblGoodsServiceImpl implements TblGoodsService {
     }
 
     @Override
-    public void addGoods(String goods_name,double price, int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales) {
-        tblGoodsDAO.addGoods(goods_name, price,category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales);
+    public void addGoods(String goods_name,double price, int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales,int lease_time) {
+        tblGoodsDAO.addGoods(goods_name, price,category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales,lease_time);
     }
 
     @Override
-    public void modifyGoods(String goods_name, double price,int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales, int id) {
-        tblGoodsDAO.modifyGoods(goods_name, price,category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales, id);
+    public void modifyGoods(String goods_name, double price,int category_id, int merchant_id, String intro, int status, String pic_url, int mode, double deposit, int stock, int sales, int lease_time,int id) {
+        tblGoodsDAO.modifyGoods(goods_name, price,category_id, merchant_id, intro, status, pic_url, mode, deposit, stock, sales,lease_time, id);
     }
 
     @Override

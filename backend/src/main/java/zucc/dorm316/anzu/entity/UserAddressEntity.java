@@ -13,6 +13,8 @@ public class UserAddressEntity {
     private String detail;
     private String name;
     private String tel;
+    private int isDefault;
+    private String addressCode;
 
     @Id
     @Column(name = "id")
@@ -94,6 +96,26 @@ public class UserAddressEntity {
         this.tel = tel;
     }
 
+    @Basic
+    @Column(name = "is_default")
+    public int getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    @Basic
+    @Column(name = "address_code")
+    public String getAddressCode() {
+        return addressCode;
+    }
+
+    public void setAddressCode(String addressCode) {
+        this.addressCode = addressCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,12 +125,14 @@ public class UserAddressEntity {
 
         if (id != that.id) return false;
         if (userId != that.userId) return false;
+        if (isDefault != that.isDefault) return false;
         if (prov != null ? !prov.equals(that.prov) : that.prov != null) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (area != null ? !area.equals(that.area) : that.area != null) return false;
         if (detail != null ? !detail.equals(that.detail) : that.detail != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (tel != null ? !tel.equals(that.tel) : that.tel != null) return false;
+        if (addressCode != null ? !addressCode.equals(that.addressCode) : that.addressCode != null) return false;
 
         return true;
     }
@@ -123,6 +147,8 @@ public class UserAddressEntity {
         result = 31 * result + (detail != null ? detail.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (tel != null ? tel.hashCode() : 0);
+        result = 31 * result + isDefault;
+        result = 31 * result + (addressCode != null ? addressCode.hashCode() : 0);
         return result;
     }
 }

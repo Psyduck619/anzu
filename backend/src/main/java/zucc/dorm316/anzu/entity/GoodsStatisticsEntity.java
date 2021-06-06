@@ -3,7 +3,7 @@ package zucc.dorm316.anzu.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "goods_statistics", schema = "anzu", catalog = "")
+@Table(name = "goods_statistic", schema = "anzu", catalog = "")
 public class GoodsStatisticsEntity {
     private int id;
     private int goodsId;

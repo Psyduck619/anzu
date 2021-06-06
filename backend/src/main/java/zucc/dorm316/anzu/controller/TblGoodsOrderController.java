@@ -97,11 +97,7 @@ public class TblGoodsOrderController {
     public JSONObject addGoodsOrder(@RequestParam(value = "user_id")int user_id,
                                @RequestParam(value = "goods_id")int goods_id,
                                @RequestParam(value = "user_address")int user_address,
-                               @RequestParam(value = "merchant_address",required = false)int merchant_address,
-                               @RequestParam(value = "order_status")int order_status,
-                               @RequestParam(value = "goods_num")int goods_num,
-                               @RequestParam(value = "receving_time",required = false) Date receiving_time,
-                               @RequestParam(value = "lease_time")int lease_time)
+                               @RequestParam(value = "goods_num")int goods_num)
     {
         JSONObject result=new JSONObject();
         try {
@@ -109,7 +105,7 @@ public class TblGoodsOrderController {
             double deposit = goodsEntity.getDeposit();
             int merchant_id = goodsEntity.getMerchantId();
             double goods_total_price = goodsEntity.getPrice() * goods_num;
-            tblGoodsOrderService.addGoodsOrder(user_id,goods_id,merchant_id,user_address,merchant_address,order_status,goods_num,goods_total_price,receiving_time,lease_time,deposit);
+            tblGoodsOrderService.addGoodsOrder(user_id,goods_id,merchant_id,user_address,-1,1,goods_num,goods_total_price,null,goodsEntity.getLeaseTime(),deposit);
             result.put("port","200");
         }
         catch (Exception e){
@@ -154,7 +150,7 @@ public class TblGoodsOrderController {
     }
 
     @RequestMapping(value="/modifyReceivingTime",method= RequestMethod.POST)
-    public JSONObject modifyGoodsOrderStatus(@RequestParam(value = "id")int id,
+    public JSONObject modifyGoodsOrderReceivingTime(@RequestParam(value = "id")int id,
                                              @RequestParam(value = "receiving_time")Date receiving_time)
     {
         JSONObject result=new JSONObject();
@@ -170,36 +166,36 @@ public class TblGoodsOrderController {
         return result;
     }
 
-    @RequestMapping(value="/modifyDeposit",method= RequestMethod.POST)
-    public JSONObject modifyGoodsOrderStatus(@RequestParam(value = "id")int id,
-                                             @RequestParam(value = "deposit")double deposit)
-    {
-        JSONObject result=new JSONObject();
-        try {
-            GoodsOrderEntity goodsOrderEntity = tblGoodsOrderService.findById(id);
-            tblGoodsOrderService.modifyGoodsOrder(goodsOrderEntity.getUserId(),goodsOrderEntity.getGoodsId(),goodsOrderEntity.getMerchantId(),goodsOrderEntity.getUserAddressId(),goodsOrderEntity.getMerchantAddressId(), goodsOrderEntity.getOrderStatus(), goodsOrderEntity.getGoodsNum(),goodsOrderEntity.getGoodsTotalPrice(),goodsOrderEntity.getReceivingTime(),goodsOrderEntity.getLeaseTime(),deposit,id);
-            result.put("port","200");
-        }
-        catch (Exception e){
-            result.put("port","500");
-            result.put("msg","修改异常");
-        }
-        return result;
-    }
+//    @RequestMapping(value="/modifyDeposit",method= RequestMethod.POST)
+//    public JSONObject modifyGoodsOrderDeposit(@RequestParam(value = "id")int id,
+//                                             @RequestParam(value = "deposit")double deposit)
+//    {
+//        JSONObject result=new JSONObject();
+//        try {
+//            GoodsOrderEntity goodsOrderEntity = tblGoodsOrderService.findById(id);
+//            tblGoodsOrderService.modifyGoodsOrder(goodsOrderEntity.getUserId(),goodsOrderEntity.getGoodsId(),goodsOrderEntity.getMerchantId(),goodsOrderEntity.getUserAddressId(),goodsOrderEntity.getMerchantAddressId(), goodsOrderEntity.getOrderStatus(), goodsOrderEntity.getGoodsNum(),goodsOrderEntity.getGoodsTotalPrice(),goodsOrderEntity.getReceivingTime(),goodsOrderEntity.getLeaseTime(),deposit,id);
+//            result.put("port","200");
+//        }
+//        catch (Exception e){
+//            result.put("port","500");
+//            result.put("msg","修改异常");
+//        }
+//        return result;
+//    }
 
 
-    @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
-    public JSONObject deleteGoodsOrderById(@RequestParam(value = "id") int id)
-    {
-        JSONObject result=new JSONObject();
-        try {
-            tblGoodsOrderService.deleteGoodsOrder(id);
-            result.put("port","200");
-        }
-        catch (Exception e){
-            result.put("port","500");
-            result.put("msg","删除异常");
-        }
-        return result;
-    }
+//    @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
+//    public JSONObject deleteGoodsOrderById(@RequestParam(value = "id") int id)
+//    {
+//        JSONObject result=new JSONObject();
+//        try {
+//            tblGoodsOrderService.deleteGoodsOrder(id);
+//            result.put("port","200");
+//        }
+//        catch (Exception e){
+//            result.put("port","500");
+//            result.put("msg","删除异常");
+//        }
+//        return result;
+//    }
 }

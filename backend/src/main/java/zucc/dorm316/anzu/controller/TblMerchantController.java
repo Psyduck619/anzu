@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.MerchantEntity;
 import zucc.dorm316.anzu.service.TblMerchantService;
+import org.springframework.util.DigestUtils;
 
 @Transactional
 @RestController
@@ -26,7 +27,7 @@ public class TblMerchantController {
             result.put("msg","无此用户");
             return result;
         }
-        else if(!merchantEntity.getPassword().equals(password)){
+        else if(!merchantEntity.getPassword().equals(DigestUtils.md5DigestAsHex(password.getBytes()))){
             result.put("port","400");
             result.put("msg","密码错误");   //密码错误
             return result;
@@ -54,6 +55,7 @@ public class TblMerchantController {
             return result;
         }
     }
+
 
     @RequestMapping(value="/deletebyaccount",method= RequestMethod.GET)
     public JSONObject deleteUserByAccount(@RequestParam(value = "account") String account)
@@ -98,8 +100,9 @@ public class TblMerchantController {
                 result.put("msg","该账户已存在");
             }
             else{
-                tblMerchantService.addMerchant(account,password,merchant_name,0,0);
+                tblMerchantService.addMerchant(account,DigestUtils.md5DigestAsHex(password.getBytes()),merchant_name,0,0);
                 result.put("port","200");
+                result.put("data",tblMerchantService.findByMerchantAccount(account));
             }
         }
         catch (Exception e){
@@ -110,13 +113,13 @@ public class TblMerchantController {
     }
 
     @RequestMapping(value="/modifyInfo",method= RequestMethod.POST)
-    public JSONObject modifyUserInfo(@RequestParam(value = "account")String account,
+    public JSONObject modifyUserInfo(@RequestParam(value = "id")int id,
                                      @RequestParam(value = "merchant_name")String merchant_name)
     {
         JSONObject result=new JSONObject();
         try {
-            MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
-            tblMerchantService.modifyMerchant(merchantEntity.getId(),account,merchantEntity.getPassword(),merchant_name,merchantEntity.getBalance(),merchantEntity.getAdminFlag());
+            MerchantEntity merchantEntity = tblMerchantService.findByMerchantId(id);
+            tblMerchantService.modifyMerchant(merchantEntity.getId(),merchantEntity.getAccount(),DigestUtils.md5DigestAsHex(merchantEntity.getPassword().getBytes()),merchant_name,merchantEntity.getBalance(),merchantEntity.getAdminFlag());
             result.put("port","200");
         }
         catch (Exception e){
@@ -127,14 +130,14 @@ public class TblMerchantController {
     }
 
     @RequestMapping(value="/modifyPassword",method= RequestMethod.POST)
-    public JSONObject modifyUserPassword(@RequestParam(value = "account")String account,
+    public JSONObject modifyUserPassword(@RequestParam(value = "id")int id,
                                          @RequestParam(value = "password")String password
     )
     {
         JSONObject result=new JSONObject();
         try {
-            MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
-            tblMerchantService.modifyMerchant(merchantEntity.getId(),account,password,merchantEntity.getMerchantName(),merchantEntity.getBalance(), merchantEntity.getAdminFlag());
+            MerchantEntity merchantEntity = tblMerchantService.findByMerchantId(id);
+            tblMerchantService.modifyMerchant(merchantEntity.getId(),merchantEntity.getAccount(),DigestUtils.md5DigestAsHex(password.getBytes()),merchantEntity.getMerchantName(),merchantEntity.getBalance(), merchantEntity.getAdminFlag());
             result.put("port","200");
         }
         catch (Exception e){
@@ -145,20 +148,20 @@ public class TblMerchantController {
     }
 
     @RequestMapping(value="/modifyBalance",method= RequestMethod.POST)
-    public JSONObject modifyUserBalance(@RequestParam(value = "account")String account,
+    public JSONObject modifyUserBalance(@RequestParam(value = "id")int id,
                                         @RequestParam(value = "difBalance")double difBalance   //传入差值金额
     )
     {
         JSONObject result=new JSONObject();
         try {
-            MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
+            MerchantEntity merchantEntity = tblMerchantService.findByMerchantId(id);
             if (merchantEntity.getBalance()+difBalance < 0){
                 result.put("port","400");
                 result.put("msg","余额不足");
             }
             else
             {
-                tblMerchantService.modifyMerchant(merchantEntity.getId(),account,merchantEntity.getPassword(),merchantEntity.getMerchantName(),merchantEntity.getBalance()+difBalance,merchantEntity.getAdminFlag());
+                tblMerchantService.modifyMerchant(merchantEntity.getId(),merchantEntity.getAccount(),DigestUtils.md5DigestAsHex(merchantEntity.getPassword().getBytes()),merchantEntity.getMerchantName(),merchantEntity.getBalance()+difBalance,merchantEntity.getAdminFlag());
                 result.put("port","200");
             }
         }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.MerchantAddressEntity;
+import zucc.dorm316.anzu.entity.MerchantAddressEntity;
 import zucc.dorm316.anzu.service.TblMerchantAddressService;
 import java.util.List;
 
@@ -72,11 +73,19 @@ public class TblMerchantAddressController {
                                      @RequestParam(value = "area")String area,
                                      @RequestParam(value = "detail")String detail,
                                      @RequestParam(value = "name")String name,
-                                     @RequestParam(value = "tel")String tel)
+                                     @RequestParam(value = "tel")String tel,
+                                     @RequestParam(value = "address_code")String address_code
+                                         )
+
     {
         JSONObject result=new JSONObject();
         try {
-            tblMerchantAddressService.addMerchantAddress(merchant_id, prov, city, area,detail, name, tel);
+            if (tblMerchantAddressService.findAllByMerchantId(merchant_id).size() == 0){
+                tblMerchantAddressService.addMerchantAddress(merchant_id, prov, city, area,detail, name, tel,1,address_code);
+            }
+            else{
+                tblMerchantAddressService.addMerchantAddress(merchant_id, prov, city, area,detail, name, tel,0,address_code);
+            }
             result.put("port","200");
         }
         catch (Exception e){
@@ -94,11 +103,12 @@ public class TblMerchantAddressController {
                                         @RequestParam(value = "detail")String detail,
                                         @RequestParam(value = "name")String name,
                                         @RequestParam(value = "tel")String tel,
+                                        @RequestParam(value = "address_code")String address_code,
                                         @RequestParam(value = "id")int id )
     {
         JSONObject result=new JSONObject();
         try {
-            tblMerchantAddressService.modifyMerchantAddress(merchant_id, prov, city, area,detail, name, tel,id);
+            tblMerchantAddressService.modifyMerchantAddress(merchant_id, prov, city, area,detail, name, tel,tblMerchantAddressService.findById(id).getIsDefault(),address_code,id);
             result.put("port","200");
         }
         catch (Exception e){
@@ -107,5 +117,22 @@ public class TblMerchantAddressController {
         }
         return result;
     }
-
+    @RequestMapping(value="/modifyDefault",method= RequestMethod.POST)
+    public JSONObject modifyMerchantDefaultAddress(@RequestParam(value = "merchant_id")int merchant_id,
+                                        @RequestParam(value = "id")int id )
+    {
+        JSONObject result=new JSONObject();
+        try {
+            MerchantAddressEntity old_default = tblMerchantAddressService.findDefaultByMerchantId(merchant_id);
+            tblMerchantAddressService.modifyMerchantAddress(old_default.getMerchantId(), old_default.getProv(), old_default.getCity(),old_default.getArea(),old_default.getDetail(),old_default.getName(),old_default.getTel(),0,old_default.getAddressCode(),old_default.getId());
+            MerchantAddressEntity new_default = tblMerchantAddressService.findById(id);
+            tblMerchantAddressService.modifyMerchantAddress(new_default.getMerchantId(),new_default.getProv(),new_default.getCity(),new_default.getArea(),new_default.getDetail(),new_default.getName(),new_default.getTel(),1,new_default.getAddressCode(),new_default.getId());
+            result.put("port","200");
+        }
+        catch (Exception e){
+            result.put("port","500");
+            result.put("msg","修改异常");
+        }
+        return result;
+    }
 }

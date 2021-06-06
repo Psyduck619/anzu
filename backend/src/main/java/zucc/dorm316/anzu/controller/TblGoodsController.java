@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.GoodsEntity;
 import zucc.dorm316.anzu.service.TblGoodsService;
+import java.util.*;
 
 import java.util.List;
 
@@ -85,6 +86,24 @@ public class TblGoodsController {
         }
     }
 
+    @RequestMapping(value="/findAllShuffle",method= RequestMethod.GET)
+    public JSONObject findAllShuffle(){
+        List<GoodsEntity> goodsEntityList = tblGoodsService.findAll();
+        JSONObject result=new JSONObject();
+        if (goodsEntityList.size()==0)
+        {
+            result.put("port","500");
+            result.put("msg","尚无商品");
+            return result;
+        }
+        else{
+            result.put("port","200");
+            Collections.shuffle(goodsEntityList);
+            result.put("data",goodsEntityList);
+            return result;
+        }
+    }
+
     @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
     public JSONObject deleteGoodsById(@RequestParam(value = "id") int id)
     {
@@ -106,16 +125,15 @@ public class TblGoodsController {
                                      @RequestParam(value = "category_id")int category_id,
                                      @RequestParam(value = "merchant_id")int merchant_id,
                                      @RequestParam(value = "intro")String intro,
-                                     @RequestParam(value = "status",required=false)int status,
+                                     @RequestParam(value = "stock")int stock,
                                      @RequestParam(value = "pic_url")String pic_url,
                                      @RequestParam(value = "mode")int mode,
                                      @RequestParam(value = "deposit")double deposit,
-                                     @RequestParam(value = "stock")int stock,
-                                     @RequestParam(value = "sales")int sales)
+                                     @RequestParam(value = "lease_time")int lease_time)
     {
         JSONObject result=new JSONObject();
         try {
-            tblGoodsService.addGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,sales);
+            tblGoodsService.addGoods(goods_name,price,category_id,merchant_id,intro,-1,pic_url,mode,deposit,stock,0,lease_time);
             result.put("port","200");
         }
         catch (Exception e){
@@ -131,17 +149,17 @@ public class TblGoodsController {
                                     @RequestParam(value = "category_id")int category_id,
                                     @RequestParam(value = "merchant_id")int merchant_id,
                                     @RequestParam(value = "intro")String intro,
-                                    @RequestParam(value = "status",required=false)int status,
+                                    @RequestParam(value = "status")int status,
                                     @RequestParam(value = "pic_url")String pic_url,
                                     @RequestParam(value = "mode")int mode,
                                     @RequestParam(value = "deposit")double deposit,
-                                    @RequestParam(value = "stock")int stock,
-                                    @RequestParam(value = "sales")int sales,
+                                    @RequestParam(value = "lease_time")int lease_time,
                                     @RequestParam(value = "id")int id)
     {
         JSONObject result=new JSONObject();
         try {
-            tblGoodsService.modifyGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,sales,id);
+            GoodsEntity goodsEntity = tblGoodsService.findById(id);
+            tblGoodsService.modifyGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,goodsEntity.getStock(),goodsEntity.getSales(),lease_time,id);
             result.put("port","200");
         }
         catch (Exception e){

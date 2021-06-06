@@ -8,6 +8,10 @@ import zucc.dorm316.anzu.entity.MerchantEntity;
 
 @Transactional
 public interface TblMerchantDAO extends JpaRepository<MerchantEntity,Integer> {
+
+    @Query(value = "select * from merchant where id = ?",nativeQuery = true)
+    MerchantEntity findByMerchantId(int id);
+
     @Query(value = "select * from merchant where account = ?",nativeQuery = true)
     MerchantEntity findByMerchantAccount(String Account);
 

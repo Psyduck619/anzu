@@ -21,13 +21,18 @@ public class TblMerchantAddressServiceImpl implements TblMerchantAddressService 
     }
 
     @Override
+    public MerchantAddressEntity findDefaultByMerchantId(int merchant_id) {
+        return tblMerchantAddressDAO.findDefaultByMerchantId(merchant_id);
+    }
+
+    @Override
     public MerchantAddressEntity findById(int id) {
         return tblMerchantAddressDAO.findById(id);
     }
 
     @Override
-    public void addMerchantAddress(int merchant_id, String prov, String city, String area,String detail, String name, String tel) {
-        tblMerchantAddressDAO.addMerchantAddress(merchant_id, prov, city, area,detail, name, tel);
+    public void addMerchantAddress(int merchant_id, String prov, String city, String area,String detail, String name, String tel,int is_default,String address_code) {
+        tblMerchantAddressDAO.addMerchantAddress(merchant_id, prov, city, area,detail, name, tel,is_default,address_code);
     }
 
     @Override
@@ -35,8 +40,9 @@ public class TblMerchantAddressServiceImpl implements TblMerchantAddressService 
         tblMerchantAddressDAO.deleteMerchantAddressById(id);
     }
 
+
     @Override
-    public void modifyMerchantAddress(int merchant_id, String prov, String city,String area, String detail, String name, String tel, int id) {
-        tblMerchantAddressDAO.modifyMerchantAddress(merchant_id, prov, city, area,detail, name, tel, id);
+    public void modifyMerchantAddress(int merchant_id, String prov, String city,String area, String detail, String name, String tel, int is_default,String address_code,int id) {
+        tblMerchantAddressDAO.modifyMerchantAddress(merchant_id, prov, city, area,detail, name, tel, is_default,address_code,id);
     }
 }

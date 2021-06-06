@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.UserAddressEntity;
 import zucc.dorm316.anzu.service.TblUserAddressService;
+import zucc.dorm316.anzu.service.TblUserService;
+
 import java.util.List;
 
 @Transactional
@@ -15,6 +17,9 @@ import java.util.List;
 public class TblUserAddressController {
     @Autowired
     TblUserAddressService tblUserAddressService;
+
+    @Autowired
+    TblUserService tblUserService;
 
     @RequestMapping(value="/findById",method= RequestMethod.GET)
     public JSONObject findById(@RequestParam(value = "id") int id){
@@ -72,11 +77,15 @@ public class TblUserAddressController {
                               @RequestParam(value = "area")String area,
                               @RequestParam(value = "detail")String detail,
                               @RequestParam(value = "name")String name,
-                              @RequestParam(value = "tel")String tel)
+                              @RequestParam(value = "tel")String tel,
+                              @RequestParam(value = "address_code")String address_code)
     {
         JSONObject result=new JSONObject();
         try {
-               tblUserAddressService.addUserAddress(user_id, prov, city, area,detail, name, tel);
+                if (tblUserAddressService.findAllByUserid(user_id).size()==0)
+                    tblUserAddressService.addUserAddress(user_id, prov, city, area,detail, name, tel,1,address_code);
+                else
+                    tblUserAddressService.addUserAddress(user_id, prov, city, area,detail, name, tel,0,address_code);
                 result.put("port","200");
         }
         catch (Exception e){
@@ -92,13 +101,14 @@ public class TblUserAddressController {
                               @RequestParam(value = "city")String city,
                               @RequestParam(value = "area")String area,
                               @RequestParam(value = "detail")String detail,
-                              @RequestParam(value = "name",required=false)String name,
-                              @RequestParam(value = "tel",required=false)String tel,
+                              @RequestParam(value = "name")String name,
+                              @RequestParam(value = "tel")String tel,
+                              @RequestParam(value = "address_code")String address_code,
                               @RequestParam(value = "id")int id )
     {
         JSONObject result=new JSONObject();
         try {
-            tblUserAddressService.modifyUserAddress(user_id, prov, city, area,detail, name, tel,id);
+            tblUserAddressService.modifyUserAddress(user_id, prov, city, area,detail, name, tel,tblUserAddressService.findById(id).getIsDefault(),address_code,id);
             result.put("port","200");
         }
         catch (Exception e){
@@ -108,4 +118,23 @@ public class TblUserAddressController {
         return result;
     }
 
+    @RequestMapping(value="/modifyDefault",method= RequestMethod.POST)
+    public JSONObject modifyUserDefaultAddress(@RequestParam(value = "user_id")int user_id,
+                                        @RequestParam(value = "id")int id )
+    {
+        JSONObject result=new JSONObject();
+        try {
+            UserAddressEntity old_default = tblUserAddressService.findDefaultAddressByUserId(user_id);
+            System.out.println(old_default.getId());
+            tblUserAddressService.modifyUserAddress(old_default.getUserId(), old_default.getProv(), old_default.getCity(),old_default.getArea(),old_default.getDetail(),old_default.getName(),old_default.getTel(),0,old_default.getAddressCode(),old_default.getId());
+            UserAddressEntity new_default = tblUserAddressService.findById(id);
+            tblUserAddressService.modifyUserAddress(new_default.getUserId(),new_default.getProv(),new_default.getCity(),new_default.getArea(),new_default.getDetail(),new_default.getName(),new_default.getTel(),1,new_default.getAddressCode(),new_default.getId());
+            result.put("port","200");
+        }
+        catch (Exception e){
+            result.put("port","500");
+            result.put("msg","修改异常");
+        }
+        return result;
+    }
 }

@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.UserEntity;
 import zucc.dorm316.anzu.service.TblUserService;
-
+import org.springframework.util.DigestUtils;
 
 @Transactional
 @RestController
@@ -21,13 +21,14 @@ public class TblUserController {
                                  @RequestParam(value = "password") String password){
         UserEntity userEntity = tblUserService.findByUserAccount(account);
         JSONObject result=new JSONObject();
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
         if (userEntity == null)
         {
             result.put("port","500");     //无该用户
             result.put("msg","无该用户");
             return result;
         }
-        else if(!userEntity.getPassword().equals(password)){
+        else if(!userEntity.getPassword().equals(md5Password)){
             result.put("port","400");      //密码错误
             result.put("msg","密码错误");
             return result;
@@ -98,8 +99,9 @@ public class TblUserController {
                 result.put("msg","该账户已存在");
             }
             else{
-                tblUserService.addUser(account,password,userName,0);
+                tblUserService.addUser(account,DigestUtils.md5DigestAsHex(password.getBytes()),userName,0);
                 result.put("port","200");
+                result.put("data",tblUserService.findByUserAccount(account));
             }
         }
         catch (Exception e){
@@ -110,13 +112,13 @@ public class TblUserController {
     }
 
     @RequestMapping(value="/modifyInfo",method= RequestMethod.POST)
-    public JSONObject modifyUserInfo(@RequestParam(value = "account")String account,
+    public JSONObject modifyUserInfo(@RequestParam(value = "id")int id,
                               @RequestParam(value = "userName")String userName)
     {
         JSONObject result=new JSONObject();
         try {
-            UserEntity user = tblUserService.findByUserAccount(account);
-            tblUserService.modifyUser(user.getId(),account,user.getPassword(),userName,user.getBalance());
+            UserEntity user = tblUserService.findByUserId(id);
+            tblUserService.modifyUser(user.getId(),user.getAccount(),DigestUtils.md5DigestAsHex(user.getPassword().getBytes()),userName,user.getBalance());
             result.put("port","200");
         }
         catch (Exception e){
@@ -127,14 +129,14 @@ public class TblUserController {
     }
 
     @RequestMapping(value="/modifyPassword",method= RequestMethod.POST)
-    public JSONObject modifyUserPassword(@RequestParam(value = "account")String account,
+    public JSONObject modifyUserPassword(@RequestParam(value = "id")int id,
                                      @RequestParam(value = "password")String password
     )
     {
         JSONObject result=new JSONObject();
         try {
-            UserEntity user = tblUserService.findByUserAccount(account);
-            tblUserService.modifyUser(user.getId(),account,password,user.getUsername(),user.getBalance());
+            UserEntity user = tblUserService.findByUserId(id);
+            tblUserService.modifyUser(user.getId(),user.getAccount(),DigestUtils.md5DigestAsHex(password.getBytes()),user.getUsername(),user.getBalance());
             result.put("port","200");
         }
         catch (Exception e){
@@ -145,20 +147,20 @@ public class TblUserController {
     }
 
     @RequestMapping(value="/modifyBalance",method= RequestMethod.POST)
-    public JSONObject modifyUserBalance(@RequestParam(value = "account")String account,
+    public JSONObject modifyUserBalance(@RequestParam(value = "id")int id,
                                      @RequestParam(value = "difBalance")double difBalance   //传入差值金额
     )
     {
         JSONObject result=new JSONObject();
         try {
-            UserEntity user = tblUserService.findByUserAccount(account);
+            UserEntity user = tblUserService.findByUserId(id);
             if (user.getBalance()+difBalance < 0){
                 result.put("port","400");
                 result.put("msg","余额不足");
             }
             else
             {
-                tblUserService.modifyUser(user.getId(),account,user.getPassword(),user.getUsername(),user.getBalance()+difBalance);
+                tblUserService.modifyUser(user.getId(),user.getAccount(),DigestUtils.md5DigestAsHex(user.getPassword().getBytes()),user.getUsername(),user.getBalance()+difBalance);
                 result.put("port","200");
             }
         }
