@@ -152,6 +152,7 @@ public class TblGoodsController {
                                     @RequestParam(value = "status")int status,
                                     @RequestParam(value = "pic_url")String pic_url,
                                     @RequestParam(value = "mode")int mode,
+                                    @RequestParam(value = "stock")int stock,
                                     @RequestParam(value = "deposit")double deposit,
                                     @RequestParam(value = "lease_time")int lease_time,
                                     @RequestParam(value = "id")int id)
@@ -159,7 +160,7 @@ public class TblGoodsController {
         JSONObject result=new JSONObject();
         try {
             GoodsEntity goodsEntity = tblGoodsService.findById(id);
-            tblGoodsService.modifyGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,goodsEntity.getStock(),goodsEntity.getSales(),lease_time,id);
+            tblGoodsService.modifyGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,goodsEntity.getSales(),lease_time,id);
             result.put("port","200");
         }
         catch (Exception e){

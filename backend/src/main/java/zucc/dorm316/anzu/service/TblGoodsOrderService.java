@@ -9,6 +9,7 @@ import java.util.List;
 @Transactional
 public interface TblGoodsOrderService {
     GoodsOrderEntity findById(int id);
+    List<GoodsOrderEntity> findAll();
     List<GoodsOrderEntity> findByUserId(int user_id);
     List<GoodsOrderEntity> findByGoodsId(int goods_id);
     List<GoodsOrderEntity> findByMerchantId(int merchant_id);

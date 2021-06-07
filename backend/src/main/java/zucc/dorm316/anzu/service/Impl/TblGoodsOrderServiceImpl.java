@@ -23,6 +23,11 @@ public class TblGoodsOrderServiceImpl implements TblGoodsOrderService {
     }
 
     @Override
+    public List<GoodsOrderEntity> findAll() {
+        return tblGoodsOrderDAO.findAll();
+    }
+
+    @Override
     public List<GoodsOrderEntity> findByUserId(int user_id) {
         return tblGoodsOrderDAO.findByUserId(user_id);
     }

@@ -13,6 +13,9 @@ public interface TblGoodsOrderDAO extends JpaRepository<GoodsOrderEntity,Integer
     @Query(value = "select * from goods_order where id=?",nativeQuery = true)
     GoodsOrderEntity findById(int id);
 
+    @Query(value = "select * from goods_order where order_status=5 OR order_status = 6",nativeQuery = true)
+    List<GoodsOrderEntity> findAll();
+
     @Query(value = "select * from goods_order where user_id=?",nativeQuery = true)
     List<GoodsOrderEntity> findByUserId(int user_id);
 
