@@ -9,4 +9,5 @@ public interface TblCommentStatisticService {
     void addCommentStatistic(int order_id,String content,int rate,int des_star,int logistics_star,int attitude_star);
     void modifyCommentStatistics(int order_id,String content,int rate,int des_star,int logistics_star,int attitude_star,int id);
     void deleteById(int id);
+    void deleteByOrderId(int order_id);
 }

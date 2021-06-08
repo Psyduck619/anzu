@@ -42,6 +42,7 @@ public class TblMerchantController {
     @RequestMapping(value="/findByAccount",method= RequestMethod.GET)
     public JSONObject findBy(@RequestParam(value = "account") String account){
         MerchantEntity merchantEntity = tblMerchantService.findByMerchantAccount(account);
+
         JSONObject result=new JSONObject();
         if (merchantEntity == null)
         {

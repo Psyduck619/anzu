@@ -1,6 +1,5 @@
 package zucc.dorm316.anzu;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,14 +14,13 @@ import java.util.List;
 
 @Component
 public class TimedTask {
-    private Logger logger =Logger.getLogger(TimedTask.class);
     @Autowired
     TblGoodsOrderService tblGoodsOrderService;
     @Autowired
     TblGoodsService tblGoodsService;
 
-    @Scheduled(cron = "* */5 * * * ?")
-    public void testSca(){
+//    @Scheduled(cron = "* */5 * * * ?")
+    public void Schedule(){
         List<GoodsOrderEntity> goodsOrderEntityList = tblGoodsOrderService.findAll();
         for (int i=0;i<goodsOrderEntityList.size();i++){
            GoodsOrderEntity goodsOrderEntity = goodsOrderEntityList.get(i);
@@ -35,7 +33,6 @@ public class TimedTask {
                if (goodsOrderEntity.getOrderStatus() == 5){
                    goodsOrderEntity.setOrderStatus(6);
                }
-               System.out.println(goodsEntity.getDeposit()-((int)((nowTime-dueTime)*1.0/1000/60/60/24)+1)*perPrice);
               if (goodsOrderEntity.getDeposit() > goodsEntity.getDeposit()-((int)((nowTime-dueTime)*1.0/1000/60/60/24)+1)*perPrice){
                     goodsOrderEntity.setDeposit(goodsEntity.getDeposit()-((int)((nowTime-dueTime)*1.0/1000/60/60/24)+1)*perPrice);
               }

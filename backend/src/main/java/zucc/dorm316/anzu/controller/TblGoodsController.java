@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.GoodsEntity;
 import zucc.dorm316.anzu.service.TblGoodsService;
+import zucc.dorm316.anzu.service.TblGoodsStatisticService;
+
 import java.util.*;
 
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
 public class TblGoodsController {
     @Autowired
     TblGoodsService tblGoodsService;
+    @Autowired
+    TblGoodsStatisticService tblGoodsStatisticService;
 
     @RequestMapping(value="/findById",method= RequestMethod.GET)
     public JSONObject findById(@RequestParam(value = "id") int id){
@@ -104,6 +108,23 @@ public class TblGoodsController {
         }
     }
 
+    @RequestMapping(value="/findAllForAdmin",method= RequestMethod.GET)
+    public JSONObject findAllForAdmin(){
+        List<GoodsEntity> goodsEntityList = tblGoodsService.findAllForAdmin();
+        JSONObject result=new JSONObject();
+        if (goodsEntityList.size()==0)
+        {
+            result.put("port","500");
+            result.put("msg","尚无商品");
+            return result;
+        }
+        else{
+            result.put("port","200");
+            result.put("data",goodsEntityList);
+            return result;
+        }
+    }
+
     @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
     public JSONObject deleteGoodsById(@RequestParam(value = "id") int id)
     {
@@ -134,6 +155,8 @@ public class TblGoodsController {
         JSONObject result=new JSONObject();
         try {
             tblGoodsService.addGoods(goods_name,price,category_id,merchant_id,intro,-1,pic_url,mode,deposit,stock,0,lease_time);
+            GoodsEntity goodsEntity = tblGoodsService.findByNameAndMerchant(goods_name,merchant_id);
+            tblGoodsStatisticService.addGoodsStatistic(goodsEntity.getId(),0,0,0,0,0,0,0);
             result.put("port","200");
         }
         catch (Exception e){

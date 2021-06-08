@@ -22,6 +22,11 @@ public class TblGoodsServiceImpl implements TblGoodsService {
     }
 
     @Override
+    public List<GoodsEntity> findAllForAdmin() {
+        return tblGoodsDAO.findAllForAdmin();
+    }
+
+    @Override
     public List<GoodsEntity> findAllByCategory(int category_id) {
         return tblGoodsDAO.findAllByCategory(category_id);
     }
@@ -39,6 +44,11 @@ public class TblGoodsServiceImpl implements TblGoodsService {
     @Override
     public GoodsEntity findById(int goods_id) {
         return tblGoodsDAO.findById(goods_id);
+    }
+
+    @Override
+    public GoodsEntity findByNameAndMerchant(String name, int merchant_id) {
+        return tblGoodsDAO.findByNameAndMerchant(name,merchant_id);
     }
 
     @Override

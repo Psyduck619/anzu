@@ -16,12 +16,12 @@ public class TblCommentStatisticServiceImpl implements TblCommentStatisticServic
 
     @Override
     public CommentStatisticEntity findById(int id) {
-        return null;
+        return tblCommentStatisticDAO.findById(id);
     }
 
     @Override
     public CommentStatisticEntity findByOrderId(int order_id) {
-        return null;
+        return tblCommentStatisticDAO.findByOrderId(order_id);
     }
 
     @Override
@@ -31,11 +31,16 @@ public class TblCommentStatisticServiceImpl implements TblCommentStatisticServic
 
     @Override
     public void modifyCommentStatistics(int order_id, String content, int rate, int des_star, int logistics_star, int attitude_star, int id) {
-
+        tblCommentStatisticDAO.modifyCommentStatistics(order_id, content, rate, des_star, logistics_star, attitude_star, id);
     }
 
     @Override
     public void deleteById(int id) {
+        tblCommentStatisticDAO.deleteById(id);
+    }
 
+    @Override
+    public void deleteByOrderId(int order_id) {
+        tblCommentStatisticDAO.deleteByOrderId(order_id);
     }
 }

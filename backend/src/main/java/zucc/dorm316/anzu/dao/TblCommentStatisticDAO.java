@@ -25,4 +25,8 @@ public interface TblCommentStatisticDAO extends JpaRepository<CommentStatisticEn
     @Modifying
     @Query(value = "delete from comment_statistic where id = ?",nativeQuery = true)
     void deleteById(int id);
+
+    @Modifying
+    @Query(value = "delete from comment_statistic where order_id = ?",nativeQuery = true)
+    void deleteByOrderId(int id);
 }

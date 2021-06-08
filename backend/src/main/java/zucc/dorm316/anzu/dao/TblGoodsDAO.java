@@ -13,16 +13,22 @@ public interface TblGoodsDAO extends JpaRepository<GoodsEntity,Integer> {
     @Query(value = "select * from goods where id=?",nativeQuery = true)
     GoodsEntity findById(int id);
 
-    @Query(value = "select * from goods",nativeQuery = true)
+    @Query(value = "select * from goods where goods_name=? AND merchant_id=?",nativeQuery = true)
+    GoodsEntity findByNameAndMerchant(String name,int merchant_id);
+
+    @Query(value = "select * from goods where status=1",nativeQuery = true)
     List<GoodsEntity> findAll();
 
-    @Query(value = "select * from goods where mode=?",nativeQuery = true)
-    List<GoodsEntity> findAllByMode(int mode);;
+    @Query(value = "select * from goods",nativeQuery = true)
+    List<GoodsEntity> findAllForAdmin();
+
+    @Query(value = "select * from goods where mode=? AND status=1",nativeQuery = true)
+    List<GoodsEntity> findAllByMode(int mode);
 
     @Query(value = "select * from goods where merchant_id=?",nativeQuery = true)
     List<GoodsEntity> findAllByMerchant(int merchant_id);
 
-    @Query(value = "select * from goods where category_id=?",nativeQuery = true)
+    @Query(value = "select * from goods where category_id=? AND status=1",nativeQuery = true)
     List<GoodsEntity> findAllByCategory(int category_id);
 
     @Modifying

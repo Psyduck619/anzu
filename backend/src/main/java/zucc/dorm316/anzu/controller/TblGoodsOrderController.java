@@ -4,10 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import zucc.dorm316.anzu.dao.TblGoodsStatisticDAO;
 import zucc.dorm316.anzu.entity.GoodsEntity;
 import zucc.dorm316.anzu.entity.GoodsOrderEntity;
+import zucc.dorm316.anzu.entity.GoodsStatisticsEntity;
 import zucc.dorm316.anzu.service.TblGoodsOrderService;
 import zucc.dorm316.anzu.service.TblGoodsService;
+import zucc.dorm316.anzu.service.TblGoodsStatisticService;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +25,9 @@ public class TblGoodsOrderController {
 
     @Autowired
     TblGoodsService tblGoodsService;
+
+    @Autowired
+    TblGoodsStatisticService tblGoodsStatisticService;
 
     @RequestMapping(value="/findById",method= RequestMethod.GET)
     public JSONObject findById(@RequestParam(value = "id") int id){
@@ -105,8 +111,15 @@ public class TblGoodsOrderController {
             double deposit = goodsEntity.getDeposit();
             int merchant_id = goodsEntity.getMerchantId();
             double goods_total_price = goodsEntity.getPrice() * goods_num;
-            tblGoodsOrderService.addGoodsOrder(user_id,goods_id,merchant_id,user_address,-1,1,goods_num,goods_total_price,null,goodsEntity.getLeaseTime(),deposit);
-            result.put("port","200");
+            if (goodsEntity.getStock() < goods_num){
+                result.put("port","400");
+                result.put("msg","库存不足");
+            }
+            else{
+                tblGoodsOrderService.addGoodsOrder(user_id,goods_id,merchant_id,user_address,-1,1,goods_num,goods_total_price,null,goodsEntity.getLeaseTime(),deposit);
+                tblGoodsService.modifyGoods(goodsEntity.getGoodsName(),goodsEntity.getPrice(),goodsEntity.getCategoryId(),goodsEntity.getMerchantId(),goodsEntity.getIntro(),goodsEntity.getStatus(), goodsEntity.getPicUrl(), goodsEntity.getMode(),goodsEntity.getDeposit(),goodsEntity.getStock()-goods_num,goodsEntity.getSales()+goods_num,goodsEntity.getLeaseTime(),goods_id);
+                result.put("port","200");
+            }
         }
         catch (Exception e){
             result.put("port","500");
@@ -139,7 +152,10 @@ public class TblGoodsOrderController {
         JSONObject result=new JSONObject();
         try {
             GoodsOrderEntity goodsOrderEntity = tblGoodsOrderService.findById(id);
+            GoodsEntity goodsEntity = tblGoodsService.findById(goodsOrderEntity.getGoodsId());
             tblGoodsOrderService.modifyGoodsOrder(goodsOrderEntity.getUserId(),goodsOrderEntity.getGoodsId(),goodsOrderEntity.getMerchantId(),goodsOrderEntity.getUserAddressId(),goodsOrderEntity.getMerchantAddressId(),order_status,goodsOrderEntity.getGoodsNum(),goodsOrderEntity.getGoodsTotalPrice(),goodsOrderEntity.getReceivingTime(),goodsOrderEntity.getLeaseTime(),goodsOrderEntity.getDeposit(),id);
+            if(order_status == 7)
+            tblGoodsService.modifyGoods(goodsEntity.getGoodsName(),goodsEntity.getPrice(),goodsEntity.getCategoryId(),goodsEntity.getMerchantId(),goodsEntity.getIntro(),goodsEntity.getStatus(),goodsEntity.getPicUrl(),goodsEntity.getMode(),goodsEntity.getDeposit(),goodsEntity.getStock()+goodsOrderEntity.getGoodsNum(),goodsEntity.getSales()-goodsOrderEntity.getGoodsNum(),goodsEntity.getLeaseTime(),goodsEntity.getId());
             result.put("port","200");
         }
         catch (Exception e){
@@ -156,7 +172,7 @@ public class TblGoodsOrderController {
         JSONObject result=new JSONObject();
         try {
             GoodsOrderEntity goodsOrderEntity = tblGoodsOrderService.findById(id);
-            tblGoodsOrderService.modifyGoodsOrder(goodsOrderEntity.getUserId(),goodsOrderEntity.getGoodsId(),goodsOrderEntity.getMerchantId(),goodsOrderEntity.getUserAddressId(),goodsOrderEntity.getMerchantAddressId(), goodsOrderEntity.getOrderStatus(), goodsOrderEntity.getGoodsNum(),goodsOrderEntity.getGoodsTotalPrice(),receiving_time,goodsOrderEntity.getLeaseTime(),goodsOrderEntity.getDeposit(),id);
+            tblGoodsOrderService.modifyGoodsOrder(goodsOrderEntity.getUserId(),goodsOrderEntity.getGoodsId(),goodsOrderEntity.getMerchantId(),goodsOrderEntity.getUserAddressId(),goodsOrderEntity.getMerchantAddressId(), 5, goodsOrderEntity.getGoodsNum(),goodsOrderEntity.getGoodsTotalPrice(),receiving_time,goodsOrderEntity.getLeaseTime(),goodsOrderEntity.getDeposit(),id);
             result.put("port","200");
         }
         catch (Exception e){
