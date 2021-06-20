@@ -146,6 +146,7 @@ public class TblGoodsController {
                                      @RequestParam(value = "category_id")int category_id,
                                      @RequestParam(value = "merchant_id")int merchant_id,
                                      @RequestParam(value = "intro")String intro,
+                                     @RequestParam(value = "status")int status,
                                      @RequestParam(value = "stock")int stock,
                                      @RequestParam(value = "pic_url")String pic_url,
                                      @RequestParam(value = "mode")int mode,
@@ -154,7 +155,7 @@ public class TblGoodsController {
     {
         JSONObject result=new JSONObject();
         try {
-            tblGoodsService.addGoods(goods_name,price,category_id,merchant_id,intro,-1,pic_url,mode,deposit,stock,0,lease_time);
+            tblGoodsService.addGoods(goods_name,price,category_id,merchant_id,intro,status,pic_url,mode,deposit,stock,0,lease_time);
             GoodsEntity goodsEntity = tblGoodsService.findByNameAndMerchant(goods_name,merchant_id);
             tblGoodsStatisticService.addGoodsStatistic(goodsEntity.getId(),0,0,0,0,0,0,0);
             result.put("port","200");

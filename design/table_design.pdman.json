@@ -662,7 +662,7 @@
             {
               "name": "account",
               "type": "DefaultString",
-              "remark": "商家账号",
+              "remark": "商家账号-->手机号注册",
               "chnname": "account",
               "notNull": true
             },
@@ -806,6 +806,12 @@
               "remark": "联系人手机号码",
               "chnname": "tel",
               "notNull": true
+            },
+            {
+              "name": "is_default",
+              "type": "Integer",
+              "remark": "是否为用户默认地址 0否 1是",
+              "chnname": "is_default"
             }
           ],
           "indexs": [],
@@ -857,77 +863,6 @@
           ],
           "chnname": "merchant_address",
           "remark": "商家地址表"
-        },
-        {
-          "title": "category",
-          "fields": [
-            {
-              "name": "id",
-              "type": "Integer",
-              "remark": "id",
-              "chnname": "id",
-              "pk": true,
-              "notNull": true,
-              "defaultValue": "",
-              "autoIncrement": true
-            },
-            {
-              "name": "category_name",
-              "type": "DefaultString",
-              "remark": "类别名",
-              "chnname": "category_name",
-              "notNull": true
-            }
-          ],
-          "indexs": [],
-          "headers": [
-            {
-              "fieldName": "chnname",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "name",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "type",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "dataType",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "remark",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "pk",
-              "relationNoShow": false
-            },
-            {
-              "fieldName": "notNull",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "autoIncrement",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "defaultValue",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "relationNoShow",
-              "relationNoShow": true
-            },
-            {
-              "fieldName": "uiHint",
-              "relationNoShow": true
-            }
-          ],
-          "chnname": "category",
-          "remark": "类表"
         },
         {
           "title": "comment_statistic",
@@ -1033,6 +968,77 @@
           ],
           "chnname": "comment_statistic",
           "remark": "订单评论统计表"
+        },
+        {
+          "title": "category",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Integer",
+              "remark": "id",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "defaultValue": "",
+              "autoIncrement": true
+            },
+            {
+              "name": "category_name",
+              "type": "DefaultString",
+              "remark": "类别名",
+              "chnname": "category_name",
+              "notNull": true
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "category",
+          "remark": "类表"
         },
         {
           "title": "aftersales",
@@ -1189,7 +1195,7 @@
             {
               "name": "order_status",
               "type": "Integer",
-              "remark": "订单状态 1已付款,2已发货,,3已签收,4已完成,5使用中,6,超时,-1退货申请,-2退货中,-3已退货,-4取消交易 -5商品返还中",
+              "remark": "订单状态 1待发货,2已发货,3已寄出，4已完成,5使用中,6超时,-2退货中,-4取消交易",
               "chnname": "order_status",
               "notNull": true
             },

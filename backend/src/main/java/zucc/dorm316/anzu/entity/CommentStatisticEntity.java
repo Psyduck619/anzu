@@ -10,7 +10,7 @@ public class CommentStatisticEntity {
     private String content;
     private int rate;
     private int descStar;
-    private int logisticsStart;
+    private int logisticsStar;
 
     @Id
     @Column(name = "id")
@@ -63,13 +63,13 @@ public class CommentStatisticEntity {
     }
 
     @Basic
-    @Column(name = "logistics_start")
+    @Column(name = "logistics_star")
     public int getLogisticsStart() {
-        return logisticsStart;
+        return logisticsStar;
     }
 
     public void setLogisticsStart(int logisticsStart) {
-        this.logisticsStart = logisticsStart;
+        this.logisticsStar = logisticsStart;
     }
 
 
@@ -84,7 +84,7 @@ public class CommentStatisticEntity {
         if (orderId != that.orderId) return false;
         if (rate != that.rate) return false;
         if (descStar != that.descStar) return false;
-        if (logisticsStart != that.logisticsStart) return false;
+        if (logisticsStar != that.logisticsStar) return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
 
         return true;
@@ -97,7 +97,7 @@ public class CommentStatisticEntity {
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + rate;
         result = 31 * result + descStar;
-        result = 31 * result + logisticsStart;
+        result = 31 * result + logisticsStar;
         return result;
     }
 }

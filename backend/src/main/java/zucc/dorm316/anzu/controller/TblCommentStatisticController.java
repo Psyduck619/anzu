@@ -5,10 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import zucc.dorm316.anzu.entity.CommentStatisticEntity;
+import zucc.dorm316.anzu.entity.GoodsOrderEntity;
 import zucc.dorm316.anzu.entity.GoodsStatisticsEntity;
 import zucc.dorm316.anzu.service.TblCommentStatisticService;
 import zucc.dorm316.anzu.service.TblGoodsOrderService;
 import zucc.dorm316.anzu.service.TblGoodsStatisticService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Transactional
@@ -39,22 +43,28 @@ public class TblCommentStatisticController {
 //        }
 //    }
 //
-//    @RequestMapping(value="/findByGoodsId",method= RequestMethod.GET)
-//    public JSONObject findByGoodsId(@RequestParam(value = "order_id") int order_id){
-//        CommentStatisticEntity commentStatisticEntity = tblCommentStatisticService.findByOrderId(order_id);
-//        JSONObject result=new JSONObject();
-//        if (commentStatisticEntity == null)
-//        {
-//            result.put("port","500");
-//            result.put("msg","无该订单评价信息");
-//            return result;
-//        }
-//        else{
-//            result.put("port","200");
-//            result.put("data",commentStatisticEntity);
-//            return result;
-//        }
-//    }
+    @RequestMapping(value="/findByGoodsId",method= RequestMethod.GET)
+    public JSONObject findByGoodsId(@RequestParam(value = "goods_id") int goods_id){
+        List<GoodsOrderEntity> goodsOrderEntityList = tblGoodsOrderService.findByGoodsId(goods_id);
+        List<CommentStatisticEntity> commentStatisticEntity = new ArrayList<>();
+        for (int i=0;i<goodsOrderEntityList.size();i++){
+            CommentStatisticEntity cse = tblCommentStatisticService.findByOrderId(goodsOrderEntityList.get(i).getId());
+            if (cse != null)
+                commentStatisticEntity.add(cse);
+        }
+        JSONObject result=new JSONObject();
+        if (commentStatisticEntity.size() == 0)
+        {
+            result.put("port","500");
+            result.put("msg","无该商品评价信息");
+            return result;
+        }
+        else{
+            result.put("port","200");
+            result.put("data",commentStatisticEntity);
+            return result;
+        }
+    }
 //
 //    @RequestMapping(value="/deletebyid",method= RequestMethod.GET)
 //    public JSONObject deleteGoodsStatisticById(@RequestParam(value = "id") int id)
